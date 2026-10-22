@@ -1,0 +1,1 @@
+offline shell, hard-reload, and service-worker update guards passed

@@ -1,0 +1,1 @@
+Pacing tests passed: civil dates, weighted thresholds, yellow/red recovery, frozen cohorts, access policy, pool filters, and fail-open storage.

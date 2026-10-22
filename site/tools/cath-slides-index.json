@@ -1,0 +1,646 @@
+[
+  {
+    "page": 2,
+    "target": "lca",
+    "view": "rao-caudal",
+    "title": "LCA: RAO Caudal",
+    "file": "cath-lca-rao-caudal.jpg",
+    "width": 970,
+    "height": 851,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 76.7,
+        "y": 24.03,
+        "lx": 83.63,
+        "ly": 22.89
+      },
+      {
+        "text": "LCX",
+        "x": 24.44,
+        "y": 20.46,
+        "lx": 18.71,
+        "ly": 22.78
+      },
+      {
+        "text": "OM",
+        "x": 38.35,
+        "y": 47.94,
+        "lx": 46.22,
+        "ly": 47.69
+      },
+      {
+        "text": "Diag",
+        "x": 39.48,
+        "y": 15.52,
+        "lx": 38.2,
+        "ly": 22.37
+      },
+      {
+        "text": "LM",
+        "x": 16.62,
+        "y": 7.56,
+        "lx": 8.35,
+        "ly": 5.88
+      },
+      {
+        "text": "SPs",
+        "x": 56.41,
+        "y": 14.53,
+        "lx": 61.94,
+        "ly": 7.26
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-rao-caudal-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-rao-caudal-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "target": "lca",
+    "view": "ap-caudal",
+    "title": "LCA: AP Caudal",
+    "file": "cath-lca-ap-caudal.jpg",
+    "width": 973,
+    "height": 873,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 49.94,
+        "y": 33.23,
+        "lx": 57.04,
+        "ly": 34.1
+      },
+      {
+        "text": "LCX",
+        "x": 29.06,
+        "y": 38.05,
+        "lx": 27.52,
+        "ly": 45.24
+      },
+      {
+        "text": "OM",
+        "x": 58.17,
+        "y": 55.77,
+        "lx": 50.17,
+        "ly": 58.19
+      },
+      {
+        "text": "Diag",
+        "x": 61.31,
+        "y": 18.52,
+        "lx": 63.93,
+        "ly": 10.87
+      },
+      {
+        "text": "LM",
+        "x": 18.91,
+        "y": 21.33,
+        "lx": 10.64,
+        "ly": 19.68
+      },
+      {
+        "text": "SPs",
+        "x": 28.62,
+        "y": 17.27,
+        "lx": 20.67,
+        "ly": 8.99
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-ap-caudal-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-ap-caudal-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 4,
+    "target": "lca",
+    "view": "lao-caudal",
+    "title": "LCA: LAO Caudal",
+    "file": "cath-lca-lao-caudal.jpg",
+    "width": 969,
+    "height": 793,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 47.98,
+        "y": 29.25,
+        "lx": 55.09,
+        "ly": 22.27
+      },
+      {
+        "text": "LCX",
+        "x": 39.48,
+        "y": 51.9,
+        "lx": 37.54,
+        "ly": 59.99
+      },
+      {
+        "text": "OM",
+        "x": 69.5,
+        "y": 44.83,
+        "lx": 72.44,
+        "ly": 37.55
+      },
+      {
+        "text": "LM",
+        "x": 26.9,
+        "y": 32.93,
+        "lx": 21.5,
+        "ly": 21.63
+      },
+      {
+        "text": "SPs",
+        "x": 13.49,
+        "y": 68.69,
+        "lx": 10.64,
+        "ly": 60.78
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-lao-caudal-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-lao-caudal-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 5,
+    "target": "lca",
+    "view": "lao-cranial",
+    "title": "LCA: LAO Cranial",
+    "file": "cath-lca-lao-cranial.jpg",
+    "width": 954,
+    "height": 938,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 43.69,
+        "y": 77.34,
+        "lx": 50.8,
+        "ly": 78.14
+      },
+      {
+        "text": "LCX",
+        "x": 35.9,
+        "y": 25.42,
+        "lx": 29.6,
+        "ly": 27.27
+      },
+      {
+        "text": "Diag",
+        "x": 56.59,
+        "y": 34.73,
+        "lx": 58.29,
+        "ly": 43.52
+      },
+      {
+        "text": "LM",
+        "x": 30.39,
+        "y": 11.61,
+        "lx": 29.36,
+        "ly": 6.44
+      },
+      {
+        "text": "SPs",
+        "x": 24.84,
+        "y": 39.07,
+        "lx": 16.89,
+        "ly": 31.51
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-lao-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-lao-cranial-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 6,
+    "target": "lca",
+    "view": "ap-cranial",
+    "title": "LCA: AP Cranial",
+    "file": "cath-lca-ap-cranial.jpg",
+    "width": 956,
+    "height": 763,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 61.66,
+        "y": 76.21,
+        "lx": 53.39,
+        "ly": 79.13
+      },
+      {
+        "text": "LCX",
+        "x": 67.79,
+        "y": 10.41,
+        "lx": 75.44,
+        "ly": 7.98
+      },
+      {
+        "text": "Diag",
+        "x": 76.08,
+        "y": 32.4,
+        "lx": 90.76,
+        "ly": 36.21
+      },
+      {
+        "text": "LM",
+        "x": 41.03,
+        "y": 13.55,
+        "lx": 39.99,
+        "ly": 7.17
+      },
+      {
+        "text": "SPs",
+        "x": 46.84,
+        "y": 36.7,
+        "lx": 37.86,
+        "ly": 34.09
+      },
+      {
+        "text": "OM",
+        "x": 77.31,
+        "y": 20.61,
+        "lx": 83.64,
+        "ly": 17.94
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-ap-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-ap-cranial-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 7,
+    "target": "lca",
+    "view": "rao-cranial",
+    "title": "LCA: RAO Cranial",
+    "file": "cath-lca-rao-cranial.jpg",
+    "width": 952,
+    "height": 782,
+    "labels": [
+      {
+        "text": "LAD",
+        "x": 71.43,
+        "y": 55.82,
+        "lx": 62.12,
+        "ly": 58.65
+      },
+      {
+        "text": "LCX",
+        "x": 42.79,
+        "y": 10.4,
+        "lx": 50.31,
+        "ly": 7.75
+      },
+      {
+        "text": "Diag",
+        "x": 70.39,
+        "y": 19.23,
+        "lx": 74.74,
+        "ly": 13.15
+      },
+      {
+        "text": "LM",
+        "x": 32.41,
+        "y": 16.32,
+        "lx": 26.71,
+        "ly": 13.62
+      },
+      {
+        "text": "SPs",
+        "x": 85.49,
+        "y": 48.13,
+        "lx": 90.21,
+        "ly": 37.57
+      },
+      {
+        "text": "OM",
+        "x": 47.97,
+        "y": 36.43,
+        "lx": 39.75,
+        "ly": 41.01
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lca-rao-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lca-rao-cranial-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 8,
+    "target": "rca",
+    "view": "lao-straight",
+    "title": "RCA: LAO Straight",
+    "file": "cath-rca-lao-straight.jpg",
+    "width": 964,
+    "height": 908,
+    "labels": [
+      {
+        "text": "RCA",
+        "x": 18.35,
+        "y": 44.52,
+        "lx": 17.86,
+        "ly": 39.99
+      },
+      {
+        "text": "Conus",
+        "x": 25.48,
+        "y": 31.75,
+        "lx": 25.56,
+        "ly": 26.26
+      },
+      {
+        "text": "PLVB",
+        "x": 54.82,
+        "y": 63.59,
+        "lx": 57.8,
+        "ly": 55.48
+      },
+      {
+        "text": "PDA",
+        "x": 56.25,
+        "y": 80.45,
+        "lx": 56.8,
+        "ly": 87.19
+      },
+      {
+        "text": "AMB",
+        "x": 15.43,
+        "y": 63.07,
+        "lx": 14.95,
+        "ly": 69.31
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-rca-lao-straight-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-rca-lao-straight-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 9,
+    "target": "rca",
+    "view": "ap-lao-cranial",
+    "title": "RCA: AP - LAO Cranial",
+    "file": "cath-rca-ap-lao-cranial.jpg",
+    "width": 955,
+    "height": 747,
+    "labels": [
+      {
+        "text": "RCA",
+        "x": 9.02,
+        "y": 22.59,
+        "lx": 8.53,
+        "ly": 17.13
+      },
+      {
+        "text": "Conus",
+        "x": 14.91,
+        "y": 12.41,
+        "lx": 11.88,
+        "ly": 7.98
+      },
+      {
+        "text": "PLVB",
+        "x": 43.1,
+        "y": 33.24,
+        "lx": 49.45,
+        "ly": 18.29
+      },
+      {
+        "text": "PDA",
+        "x": 41.67,
+        "y": 62.59,
+        "lx": 42.12,
+        "ly": 71.09
+      },
+      {
+        "text": "AMB",
+        "x": 11.09,
+        "y": 70.28,
+        "lx": 10.95,
+        "ly": 77.91
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-rca-ap-lao-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-rca-ap-lao-cranial-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 10,
+    "target": "rca",
+    "view": "rao-straight",
+    "title": "RCA: RAO Straight",
+    "file": "cath-rca-rao-straight.jpg",
+    "width": 858,
+    "height": 602,
+    "labels": [
+      {
+        "text": "RCA",
+        "x": 28.26,
+        "y": 39.63,
+        "lx": 20.12,
+        "ly": 35.43
+      },
+      {
+        "text": "Conus",
+        "x": 32.95,
+        "y": 20.48,
+        "lx": 22.18,
+        "ly": 17.19
+      },
+      {
+        "text": "PLVB",
+        "x": 52.15,
+        "y": 51.8,
+        "lx": 66.13,
+        "ly": 44.16
+      },
+      {
+        "text": "PDA",
+        "x": 53.81,
+        "y": 77.46,
+        "lx": 57.62,
+        "ly": 88.45
+      },
+      {
+        "text": "AMB",
+        "x": 30.74,
+        "y": 69.88,
+        "lx": 20.0,
+        "ly": 76.82
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-rca-rao-straight-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-rca-rao-straight-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 11,
+    "target": "lv",
+    "view": "rao-cranial",
+    "title": "LV Gram: RAO Cranial",
+    "file": "cath-lv-rao-cranial.jpg",
+    "width": 951,
+    "height": 816,
+    "labels": [
+      {
+        "text": "Inferior",
+        "x": 56.19,
+        "y": 80.15,
+        "lx": 52.64,
+        "ly": 86.05
+      },
+      {
+        "text": "Anterobasal",
+        "x": 60.17,
+        "y": 19.01,
+        "lx": 62.01,
+        "ly": 11.48
+      },
+      {
+        "text": "Anterior",
+        "x": 76.31,
+        "y": 30.82,
+        "lx": 78.57,
+        "ly": 22.9
+      },
+      {
+        "text": "Inferobasal",
+        "x": 28.08,
+        "y": 65.44,
+        "lx": 22.27,
+        "ly": 72.24
+      },
+      {
+        "text": "Apical",
+        "x": 85.6,
+        "y": 80.95,
+        "lx": 83.9,
+        "ly": 88.59
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lv-rao-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lv-rao-cranial-tilt.png"
+      }
+    ]
+  },
+  {
+    "page": 12,
+    "target": "lv",
+    "view": "lao-cranial",
+    "title": "LV Gram: LAO Cranial",
+    "file": "cath-lv-lao-cranial.jpg",
+    "width": 523,
+    "height": 434,
+    "labels": [
+      {
+        "text": "Basal lateral",
+        "x": 57.38,
+        "y": 40.84,
+        "lx": 60.17,
+        "ly": 33.82
+      },
+      {
+        "text": "Apical lateral",
+        "x": 60.48,
+        "y": 70.32,
+        "lx": 65.71,
+        "ly": 77.52
+      },
+      {
+        "text": "Apex",
+        "x": 40.42,
+        "y": 85.36,
+        "lx": 40.23,
+        "ly": 92.59
+      },
+      {
+        "text": "Basal septal",
+        "x": 23.17,
+        "y": 41.24,
+        "lx": 21.35,
+        "ly": 33.32
+      },
+      {
+        "text": "Apical septal",
+        "x": 23.57,
+        "y": 72.93,
+        "lx": 17.93,
+        "ly": 80.8
+      }
+    ],
+    "positionRefs": [
+      {
+        "axis": "rot",
+        "file": "cath-pos-lv-lao-cranial-rot.png"
+      },
+      {
+        "axis": "tilt",
+        "file": "cath-pos-lv-lao-cranial-tilt.png"
+      }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+/* ============ Drag-to-highlight ============
+   Select (drag) text in the main content to mark it.
+   Drag over the same marked text again to remove the mark.
+   Highlights persist per view (keyed to the route). */
+
+mark.cs-hl {
+  background-color: rgba(255, 208, 64, 0.42);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 0.5px;
+  cursor: pointer;
+  /* keep the tint continuous across line wraps */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color 0.15s ease;
+}
+
+mark.cs-hl:hover {
+  background-color: rgba(255, 196, 0, 0.55);
+}
+
+/* Selection colour tuned so a fresh drag reads clearly over existing marks */
+#main ::selection {
+  background-color: rgba(90, 170, 255, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  mark.cs-hl {
+    background-color: rgba(255, 214, 90, 0.30);
+    color: inherit;
+  }
+  mark.cs-hl:hover {
+    background-color: rgba(255, 214, 90, 0.45);
+  }
+}
+
+:root[data-theme="dark"] mark.cs-hl {
+  background-color: rgba(255, 214, 90, 0.30);
+  color: inherit;
+}
+:root[data-theme="dark"] mark.cs-hl:hover {
+  background-color: rgba(255, 214, 90, 0.45);
+}
+:root[data-theme="light"] mark.cs-hl {
+  background-color: rgba(255, 208, 64, 0.42);
+}

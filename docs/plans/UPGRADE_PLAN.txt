@@ -1,0 +1,1174 @@
+================================================================================
+CARDIACSCHOOL — DELIVERABLE-LEVEL OVERHAUL PLAN (v2)
+From "14-day clerkship primer" to "the single resource that makes a student
+think, talk, and operate-assist like a PGY5 cardiac surgery resident."
+================================================================================
+
+Author intent: this document replaces the old orchestration checklist. It is a
+product/content specification, not a build script. It describes WHAT the finished
+app should contain and WHY, in enough detail that any competent author (human or
+agent) can produce the content without further clarification. No code is written
+here. Every section is written to be handed to a content pod as a work order.
+
+Reading guide:
+  PART A — Where the app is today, and the gap to "PGY5."
+  PART B — The content overhaul: what to add, day by day, to reach PGY5 depth.
+  PART C — The Surgeries tab (the headline new deliverable) — full specification.
+  PART D — Interactivity overhaul: turning reading into doing.
+  PART E — Visual & experience overhaul.
+  PART F — Assessment, spaced repetition, and the "PGY5 certification" layer.
+  PART G — Exponential improvements (the ideas that change the ceiling, not the floor).
+  PART H — Content authoring standards (so everything reads like one voice).
+  PART I — Prioritized roadmap and acceptance criteria.
+
+Throughout, "PGY5 level" is defined concretely (see A.3) so it is a testable bar,
+not a slogan.
+
+================================================================================
+PART A — CURRENT STATE AND THE DEFINITION OF "PGY5"
+================================================================================
+
+A.1  WHAT EXISTS TODAY (honest inventory)
+--------------------------------------------------------------------------------
+The app is a zero-build static site under site/. It ships:
+  - A 14-day curriculum (curriculum.js): Anatomy, Coronary physiology, Valvular
+    pathology, Imaging, Preop/risk, CABG, Valve surgery, Aortic/pericardial, MCS,
+    CPB/cardioplegia, Hemostasis, Pacing, ICU/complications, and a Mock exam.
+  - 43 micro-lessons broken into "chunks" (teaching prose + kboxes +
+    embedded checkpoint MCQs).
+  - ~285 flashcards and ~192 MCQs, lesson-gated (you must finish a lesson to
+    unlock its cards and questions).
+  - An Anatomy Review module (23 regions) plus a separate 124-card cloze anatomy
+    deck (currently a second, parallel SRS engine).
+  - A Trials module (17 landmark trials, 51 MCQs).
+  - Interactive "exercises" (9 ordering drills + 5 label-the-diagram drills).
+  - Gamification: XP, levels, day-streak, achievement badges.
+  - A mock Royal College exam that draws 75 questions from the completed bank.
+
+The teaching prose is genuinely good (see lessons-d1: mediastinal compartments,
+pericardial compliance, chamber orientation, groove of Sondergaard). The problem
+is not quality — it is COVERAGE, DEPTH CEILING, and MODE. The app teaches facts
+and tests recall. It does not yet teach JUDGMENT, OPERATIVE THINKING, or
+MANAGEMENT UNDER UNCERTAINTY — which is the difference between a strong clerk and
+a senior resident.
+
+A.2  THE STRUCTURAL GAPS (what a PGY5 has that this app does not teach)
+--------------------------------------------------------------------------------
+1. No operative fluency. A student can finish all 14 days and still not be able to
+   narrate a single case start-to-finish: how the patient is positioned, where
+   the lines go, the sequence from skin to cannulation to cross-clamp to weaning
+   to closure, what the surgeon asks for at each step, and what goes wrong. This
+   is the single biggest gap and the reason PART C (Surgeries tab) is the
+   headline deliverable.
+2. No "why this operation for this patient." The app teaches disease and teaches
+   evidence separately. A PGY5 fuses them: given a specific patient, they argue
+   the indication, choose the operation, choose the conduit/valve/cannulation
+   strategy, and defend it against the Heart Team. The app needs decision content.
+3. Shallow physiology. Coronary supply/demand and valve gradients are described in
+   words, but the student never MANIPULATES a pressure-volume loop, a
+   Frank-Starling curve, or a CPB oxygen-delivery equation. PGY5s reason in
+   curves, not sentences.
+4. No crisis management. Cardiac surgery is defined by low-frequency,
+   high-lethality events: protamine reaction, malignant hyperthermia,
+   post-bypass RV failure, massive air embolism, aortic dissection on cannulation,
+   sudden VF, tamponade at 3 a.m. The app has none of these as rehearsable
+   scenarios.
+5. No ICU/postop reasoning engine. The ICU day lists complications; a PGY5 runs a
+   low-cardiac-output algorithm at the bedside, titrates four drips, reads a
+   Swan, and decides when to re-open the chest. This needs to be interactive.
+6. No integration/synthesis assessment. The mock exam is 75 recall MCQs. Royal
+   College / oral-board reality is the "long case" and rapid-fire viva. The app
+   needs oral-exam-style, branched, defend-your-answer assessment.
+7. No imaging fluency. "Imaging day" describes echo and cath in prose. A PGY5
+   reads a TEE clip, a coronary angiogram, and a CT dissection in seconds. The
+   app needs annotated image/loop libraries with read-out drills.
+
+A.3  DEFINITION OF "PGY5-READY" (the testable bar every piece of content targets)
+--------------------------------------------------------------------------------
+A user has reached the PGY5 bar for a topic when they can, WITHOUT PROMPTS:
+  (a) State the indication for operation with the specific thresholds and the
+      guideline class/level of evidence, AND name the trial(s) that set them.
+  (b) Choose among competing operations/strategies and defend the choice for a
+      SPECIFIC patient (age, comorbidity, anatomy), including when NOT to operate.
+  (c) Narrate the operation step-by-step, name the instruments and sutures, state
+      the numbers (ACT, flow index, cross-clamp limits, cardioplegia dosing), and
+      predict the next step.
+  (d) Anticipate the three most likely intra-op complications at each step and
+      state the immediate management.
+  (e) Run the first 24 postoperative hours: expected trajectory, the derangements
+      to expect, the drips and their doses, and the triggers for escalation
+      (re-exploration, MCS, dialysis).
+  (f) Answer "why" three levels deep — mechanism, evidence, and exception.
+
+Every lesson, flashcard, MCQ, surgery article, and simulation in this plan must
+ladder up to at least one of (a)–(f). If a proposed piece of content does not, it
+is trivia and should be cut.
+
+================================================================================
+PART B — CONTENT OVERHAUL: DAY-BY-DAY DEPTH TO PGY5
+================================================================================
+
+Principle: keep the 14-day spine (it is a good on-ramp) but add a second,
+deeper LAYER on top of each day — "Attending Rounds" content — that is unlocked
+after the day's core lessons. The core layer takes a novice to competent-clerk.
+The Attending Rounds layer takes competent-clerk to PGY5. This preserves the
+gentle on-ramp while raising the ceiling dramatically.
+
+Each day below lists: (1) the depth gaps to fill in the core layer, and
+(2) the new "Attending Rounds" advanced module to add. Target density per new
+advanced module: 6–10 lessons-chunks, 8–12 flashcards, 6–10 MCQs, plus at least
+one interactive element and one linked Surgery or Simulation.
+
+B.1  DAY 1 — ANATOMY (core is strong; add surgical-anatomy depth)
+--------------------------------------------------------------------------------
+Core gaps to fill:
+  - Coronary dominance defined operationally (who supplies the PDA; why RCA-
+    dominant matters for inferior MI and for grafting the PDA).
+  - The interventricular and AV grooves as surgical landmarks; the course of the
+    LAD in the anterior IV groove and its diagonal/septal branches; the danger of
+    the "intramyocardial LAD."
+  - The conduction axis in three dimensions: SA node at the SVC-RA junction (and
+    why RA cannulation and Waterston/Sondergaard dissection threaten it), the AV
+    node in the triangle of Koch (Todaro tendon, coronary sinus os, septal
+    tricuspid leaflet), the His bundle penetrating at the membranous septum — the
+    reason AVR and VSD closure cause heart block.
+  - The aortic root as an anatomic unit: annulus, sinuses of Valsalva, coronary
+    ostia, sinotubular junction, commissures; the fibrous continuity between the
+    aortic and mitral valves (aortomitral curtain).
+  - Venous/lymphatic drainage relevant to cannulation and to chylothorax.
+Attending Rounds — "Surgical Anatomy of Danger":
+  A module organized by "structures you can kill the patient with": the
+  circumflex under the mitral annulus (P1 area), the AV node during tricuspid/
+  septal work, the phrenic nerve on the pericardium and during LIMA harvest, the
+  recurrent laryngeal around the arch/ligamentum, the thoracic duct, the
+  membranous septum in AVR. Each with the operative maneuver that protects it.
+  Ends with a linked "label the danger" interactive on a cross-sectional diagram.
+
+B.2  DAY 2 — CORONARY PHYSIOLOGY (add the quantitative and the interventional)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Myocardial oxygen extraction is near-maximal at rest (~70–80%), so increased
+    demand MUST be met by increased flow — the mechanistic reason coronary
+    stenosis causes angina. Make this a numeric, not a phrase.
+  - Coronary flow is diastolic (LV), and the determinants of the diastolic
+    perfusion gradient (aortic diastolic pressure minus LVEDP). This is the entire
+    logic of the IABP and of why tachycardia is ischemic (shortened diastole).
+  - Autoregulation, coronary flow reserve, and the concept of the critical
+    stenosis (~70% diameter / ~90% area). Tie to FFR ≤ 0.80 and iFR.
+  - Collateral circulation and coronary steal.
+Attending Rounds — "Ischemia as a Decision":
+  FFR/iFR-guided revascularization, the ISCHEMIA trial nuance (OMT vs early
+  invasive in stable disease), viability assessment (hibernating vs stunned vs
+  infarcted myocardium and why it changes the revascularization decision),
+  and the supply/demand table used at the bedside to treat ischemia
+  (lower demand: HR, wall tension, contractility; raise supply: FiO2, Hgb,
+  diastolic pressure, relieve spasm). Interactive: a supply/demand "balance beam"
+  the user tips by choosing interventions.
+
+B.3  DAY 3 — VALVULAR PATHOLOGY (add staging, hemodynamics, and natural history)
+--------------------------------------------------------------------------------
+Core gaps:
+  - The four-stage ACC/AHA framework (A at-risk, B progressive, C asymptomatic
+    severe [C1 compensated / C2 decompensated], D symptomatic severe) applied to
+    AS, AR, MS, MR. This is the language of every valve decision.
+  - Quantitative severity thresholds memorized cold: severe AS (Vmax ≥ 4 m/s,
+    mean gradient ≥ 40 mmHg, AVA ≤ 1.0 cm2, dimensionless index), low-flow/low-
+    gradient AS and the dobutamine challenge; severe MR (EROA, regurgitant volume,
+    vena contracta); severe MS (MVA ≤ 1.5, then ≤ 1.0) and the pressure half-time.
+  - Pressure-overload vs volume-overload remodeling and why the ventricle's
+    response dictates the operative window (the "operate before the ventricle
+    fails" principle). LVESD and EF triggers for asymptomatic severe AR/MR.
+  - Primary vs secondary MR — a genuinely different disease with a different
+    operation and different evidence (COAPT vs MITRA-FR).
+Attending Rounds — "The Valve Clinic":
+  Case-based: for each of six patients, walk the stage → symptom → imaging → Heart
+  Team decision → repair-vs-replace → mechanical-vs-tissue → surgical-vs-
+  transcatheter. Pull in the age/anticoagulation tradeoff explicitly. Interactive:
+  a "when do you operate?" slider timeline where the user places the operative
+  moment on the natural-history curve and sees survival consequences.
+
+B.4  DAY 4 — IMAGING (turn description into READING)
+--------------------------------------------------------------------------------
+Core gaps:
+  - The standard TEE exam: the mid-esophageal views (4-chamber, 2-chamber, LAX,
+    aortic valve SAX/LAX, bicaval), transgastric views for gradients, and what
+    each is FOR. The intraoperative TEE checklist before and after CPB.
+  - Reading a coronary angiogram: naming segments, describing a lesion (location,
+    %stenosis, length, calcification, TIMI flow), and the standard views that open
+    up the LAD/circ/RCA.
+  - The dissection CT: true vs false lumen signs, entry tear, malperfusion,
+    Stanford A vs B, and the measurements that drive operation.
+  - Echo of the failing post-op heart: tamponade physiology, RV assessment (TAPSE,
+    S'), volume status, LVOT obstruction/SAM after mitral repair.
+Attending Rounds — "Read-Out Drills":
+  This day is transformed by the imaging library in PART D.4. The advanced module
+  is a set of annotated loops/stills with hotspot questions ("point to the entry
+  tear," "grade this MR," "which segment is occluded"). This is the single
+  highest-yield interactivity upgrade for imaging.
+
+B.5  DAY 5 — PREOP & RISK (make risk quantitative and actionable)
+--------------------------------------------------------------------------------
+Core gaps:
+  - STS-PROM vs EuroSCORE II: what each includes, calibration, and the honest
+    limits (neither captures frailty, porcelain aorta, hostile chest well).
+  - Frailty, the "eyeball test," gait speed, and how they move a borderline
+    patient from surgical to transcatheter.
+  - Preoperative optimization that changes outcomes: anemia/iron, glycemic
+    control, smoking, prehabilitation, timing after MI/stent (DAPT interruption
+    logistics), carotid disease, dental clearance for valve surgery.
+  - The workup that must be complete before pump: coronaries, carotids, PFTs when
+    indicated, dentition, CT for redo/aortic, group-and-crossmatch, echo.
+Attending Rounds — "Building the Case for Operation":
+  A structured Heart Team simulation: the user is dealt a patient dossier and must
+  assemble the indication, quantify risk two ways, list the optimization steps,
+  and write the one-paragraph "why we are operating and why now." Interactive:
+  a risk calculator that lets the user toggle comorbidities and watch STS move.
+
+B.6  DAY 6 — CABG (add conduit science, completeness, and the evidence in depth)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Conduit biology and patency: LIMA-to-LAD (>90% at 10y and WHY — the internal
+    mammary's endothelial/vasodilator biology and resistance to atherosclerosis),
+    radial vs saphenous vein (RADIAL trials), the total-arterial and BIMA debate
+    (ART trial, sternal wound risk in diabetics), no-touch vein harvest.
+  - Completeness of revascularization and the concept of grafting all vessels
+    > 1.5 mm supplying viable myocardium.
+  - On-pump vs off-pump (ROOBY, CORONARY): the real tradeoffs and who benefits.
+  - The evidence architecture: SYNTAX score and the anatomy → decision map,
+    FREEDOM (diabetics → CABG), EXCEL/NOBLE (left main) and the still-live
+    controversy. This day should make the student able to argue CABG vs PCI for a
+    named patient using the exact trials.
+Attending Rounds — "Designing the Operation":
+  Given a coronary map, the user plans the grafts (which conduit to which target,
+  sequential vs individual, proximal anastomosis strategy, off- vs on-pump). Links
+  directly to the CABG surgery article in PART C.
+
+B.7  DAY 7 — VALVE SURGERY (repair-vs-replace and prosthesis choice in depth)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Aortic: SAVR vs TAVR by risk and age (PARTNER 1/2/3, Evolut), valve-in-valve,
+    the durability-vs-invasiveness curve, bicuspid and small-annulus problems,
+    the Ross and its niche.
+  - Mitral repair science: degenerative (Carpentier functional classification,
+    leaflet resection vs neochords, annuloplasty ring sizing, the "repair is
+    better than replace" survival data) and the systolic-anterior-motion trap.
+  - Mechanical vs tissue: the age thresholds, the lifelong-anticoagulation
+    tradeoff, structural valve deterioration, and shared decision-making.
+  - Tricuspid: the under-treated valve, when to add a ring at left-sided surgery.
+Attending Rounds — "Repair or Replace, and With What":
+  Six valve patients, each forcing one hard call. Interactive decision tree with
+  the evidence surfaced at each branch. Links to SAVR and mitral-repair surgery
+  articles.
+
+B.8  DAY 8 — AORTIC & PERICARDIAL (the emergencies; add operative strategy)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Aneurysm thresholds (5.5 cm ascending, lower for bicuspid/Marfan/family
+    history/rapid growth), the root-vs-supracoronary decision, valve-sparing root
+    (David/Yacoub).
+  - Type A dissection as a surgical emergency: the clock, malperfusion syndromes,
+    cannulation strategy (axillary/femoral/central), circulatory arrest with
+    antegrade cerebral perfusion, the hemiarch vs total arch decision, the frozen
+    elephant trunk.
+  - Type B: medical management, TEVAR indications, complicated vs uncomplicated.
+  - Pericardial disease: tamponade physiology (pulsus paradoxus, the equalized
+    diastolic pressures, echo signs), constrictive vs restrictive, the window
+    vs pericardiectomy decision.
+Attending Rounds — "The 2 a.m. Dissection":
+  A time-pressured branched simulation from ED call to sternotomy: recognize,
+  image, resuscitate to permissive parameters, choose cannulation, choose arch
+  strategy. This is also a flagship crisis simulation (PART D.3).
+
+B.9  DAY 9 — MECHANICAL CIRCULATORY SUPPORT (add the physiology and the decisions)
+--------------------------------------------------------------------------------
+Core gaps:
+  - IABP: exact mechanism (diastolic augmentation raises coronary perfusion,
+    systolic deflation reduces afterload), timing errors and their waveforms,
+    contraindications (AR, dissection), the honest evidence (IABP-SHOCK II).
+  - ECMO: VA vs VV, the physiology of VA-ECMO (retrograde aortic flow, LV
+    distension and the need to vent, north-south/Harlequin syndrome,
+    differential hypoxia), cannulation, weaning, complications.
+  - Durable LVAD: continuous-flow physiology, INTERMACS profiles, the destination-
+    vs-bridge decision, driveline infection, GI bleeding/AVMs, pump thrombosis,
+    RV failure after LVAD.
+  - Transplant: allocation, the donor heart, primary graft dysfunction, rejection
+    and immunosuppression basics.
+Attending Rounds — "Escalating Support":
+  A ladder simulation: a failing heart the user must support one rung at a time
+  (inotropes → IABP → temporary VAD/ECMO → durable device/transplant), choosing
+  the right device for the failure mode (LV vs RV vs biV vs respiratory).
+
+B.10 DAY 10 — CPB & CARDIOPLEGIA (already deep; add troubleshooting and the "feel")
+--------------------------------------------------------------------------------
+Core gaps:
+  - The circuit as a system the student can draw from memory: venous reservoir,
+    pump (roller vs centrifugal), oxygenator, heat exchanger, arterial filter,
+    cardioplegia delivery, vents and suckers, the safety devices (level/bubble
+    sensors).
+  - The numbers cold: ACT > 400–480 for bypass, flow index 2.2–2.5 L/min/m2,
+    MAP targets, hematocrit on pump, temperature strategies, alpha- vs pH-stat and
+    WHEN each is used.
+  - Myocardial protection in depth: antegrade vs retrograde, del Nido vs blood
+    cardioplegia dosing intervals, the reason for topical cooling and for the
+    "hot shot" reperfusion dose.
+  - Troubleshooting: high line pressure, low venous return, rising reservoir,
+    the differential for "won't come off pump."
+Attending Rounds — "On the Pump":
+  A perfusion simulation (see PART D.2 physiology labs): the user sets flow,
+  temperature, and cardioplegia and manages events (venous air lock, sudden
+  hypotension on initiation of bypass = dissection until proven otherwise).
+
+B.11 DAY 11 — HEMOSTASIS (add the algorithm and the products)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Heparin/protamine dosing and the protamine reactions (three types, including
+    catastrophic pulmonary vasoconstriction), heparin resistance and ATIII.
+  - The post-bypass coagulopathy: dilution, platelet dysfunction from the circuit,
+    hypothermia, hyperfibrinolysis, residual heparin — and how to tell them apart
+    with TEG/ROTEM and a targeted product strategy.
+  - The surgical-vs-medical bleeding decision and the criteria for re-exploration
+    (rate-based chest-tube thresholds, the "sudden stop then tamponade" trap).
+  - Antifibrinolytics (tranexamic acid), factor concentrates, cell salvage,
+    Jehovah's Witness bloodless strategies.
+Attending Rounds — "The Bleeding Chest":
+  A branched scenario: chest tubes at 300 mL/hr — is it surgical or coagulopathic?
+  The user orders TEG, interprets it, gives targeted product, and decides on
+  re-exploration. Interactive TEG interpretation drill.
+
+B.12 DAY 12 — PACING & CONDUCTION (add wire management and the rhythm algorithms)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Epicardial wires: atrial vs ventricular, how to test capture and sensing,
+    the pacing modes (AAI/VVI/DDD) and when each is used post-op.
+  - Post-op AF: incidence, prevention (beta-blockade, amiodarone, the debate),
+    rate vs rhythm, anticoagulation decision and stroke risk.
+  - Heart block after AVR/mitral/septal work: the anatomy (B.1), temporary pacing,
+    and the threshold to permanent pacemaker.
+  - The unstable rhythms in the unit: VT/VF, the pause-dependent situations,
+    pacing to overdrive.
+Attending Rounds — "Rhythm at the Bedside":
+  Interactive: a pacemaker box the user must program to the clinical situation
+  (failure to capture → raise output; oversensing → adjust sensitivity;
+  complete heart block → set a backup rate). Rhythm-strip read-out drills.
+
+B.13 DAY 13 — CARDIAC ICU & COMPLICATIONS (turn the list into an ENGINE)
+--------------------------------------------------------------------------------
+Core gaps:
+  - Low cardiac output syndrome as an ALGORITHM: define it (CI < 2.0–2.2, rising
+    lactate, oliguria, cool periphery), then the systematic work-up
+    (preload → afterload → contractility → rate/rhythm → tamponade → ischemia →
+    mechanical), and the ordered response.
+  - The Swan-Ganz numbers and the four hemodynamic profiles; when a Swan changes
+    management and when it does not.
+  - Vasoplegia (the post-CPB distributive shock): recognition and the escalation
+    ladder (norepinephrine → vasopressin → methylene blue → hydroxocobalamin →
+    angiotensin II).
+  - RV failure, tamponade (including the low-pressure/localized clot after cardiac
+    surgery that echo can miss), the differential for the hypotensive post-op
+    patient, and the trigger to re-open at the bedside.
+  - The other-organ complications: AKI/CRRT, stroke/delirium, respiratory failure,
+    sternal wound infection/mediastinitis, GI (mesenteric ischemia), the systemic
+    inflammatory response.
+Attending Rounds — "Running the Unit":
+  The flagship ICU simulation (PART D.3): a fresh post-op patient whose numbers
+  drift; the user runs the LCOS algorithm, titrates drips, calls for a Swan,
+  echoes for tamponade, and decides on re-exploration or MCS. This is the capstone
+  that ties Days 9, 10, 12, and 13 together.
+
+B.14 DAY 14 — replaced by the assessment overhaul (PART F). The single 75-MCQ
+     exam becomes a multi-format "certification" including oral-style vivas and a
+     long case.
+
+================================================================================
+PART C — THE SURGERIES TAB (HEADLINE NEW DELIVERABLE)
+================================================================================
+
+This is the centerpiece the user asked for: a dedicated "Surgeries" section where
+each operation has a long-form article (minimum 500 words, target 1,200–2,500 for
+the flagship operations) that takes a reader who knows NOTHING about the operation
+or the anatomy and leaves them thinking at a PGY5 level — plus its own flashcards
+and MCQs. It should feel like the best operative chapter a resident ever read,
+made interactive.
+
+C.1  INFORMATION ARCHITECTURE
+--------------------------------------------------------------------------------
+New top-level nav item: "Surgeries" (scalpel icon), route #/surgery.
+Landing page: a grid of operation cards grouped by category:
+  - Coronary: CABG (on-pump), OPCAB (off-pump), redo CABG.
+  - Aortic valve: SAVR, TAVR/TAVI, Ross procedure, aortic root replacement
+    (Bentall), valve-sparing root (David).
+  - Mitral valve: mitral repair (degenerative), mitral replacement,
+    transcatheter edge-to-edge repair (TEER/MitraClip).
+  - Other valve: tricuspid repair, double-valve.
+  - Aorta: ascending/hemiarch replacement, total arch + frozen elephant trunk,
+    type A dissection repair, TEVAR.
+  - MCS/transplant: IABP insertion, ECMO cannulation (peripheral VA), durable
+    LVAD implant, heart transplant.
+  - Foundational operative skills (their own short articles): median sternotomy,
+    going on and coming off cardiopulmonary bypass, aortic and venous cannulation,
+    cardioplegia delivery, de-airing, sternal closure, redo sternotomy,
+    pericardiocentesis, IABP, chest re-exploration for bleeding/tamponade.
+Each card shows: title, category, estimated read time, difficulty, and a
+completion/mastery ring.
+
+C.2  THE ARTICLE TEMPLATE (every surgery article follows this exact spine)
+--------------------------------------------------------------------------------
+Each article is structured so a novice can start at the top and a PGY5 can jump to
+the middle. Sections, in order:
+
+  1. ONE-LINE ORIENTATION — what this operation is and what problem it solves,
+     in a single plain sentence a first-year student understands.
+  2. THE PROBLEM (indications & who gets it) — the disease in brief, the exact
+     indication thresholds, the guideline class/level, the competing options, and
+     the "why this operation for this patient." Names the landmark trials and
+     links to the Trials module.
+  3. RELEVANT ANATOMY (assume zero knowledge) — a from-scratch tour of exactly the
+     anatomy this operation touches, with the diagram and the danger structures.
+     This is what lets a novice start cold. Links to the Anatomy Review module.
+  4. PREOPERATIVE CHECKLIST — workup that must be complete, consent points, the
+     specific imaging the surgeon needs in the room, positioning, lines/monitors,
+     anesthetic considerations, antibiotics/timing.
+  5. THE OPERATION, STEP BY STEP — the heart of the article. A numbered sequence
+     from skin to closure. For EACH step: what is done, what instruments/sutures
+     are used, what the surgeon is thinking, the specific numbers/targets, and the
+     "what the student does" (retract here, load this suture, watch this). Written
+     so the reader can narrate the case afterward. This section alone should be
+     300–1,000+ words for flagship operations.
+  6. THE NUMBERS — a quick-reference block of every quantitative target in the
+     case (ACT, flow index, cross-clamp time expectations, cardioplegia dosing
+     intervals, sizing, pressures).
+  7. WHAT GOES WRONG (complications by step) — the three-to-six most important
+     intra-op and early post-op complications, each mapped to the step where it
+     arises, its recognition, and its immediate management. This is where PGY5
+     judgment lives.
+  8. THE FIRST 24 HOURS — expected postoperative trajectory and the specific
+     things to watch for THIS operation (e.g., heart block after AVR, RV failure
+     after LVAD, malperfusion after dissection repair, SAM after mitral repair).
+  9. EVIDENCE & CONTROVERSY — the trials and the still-live debates
+     (BIMA, on/off-pump, TAVR-vs-SAVR by age, repair-vs-replace).
+ 10. HOW TO SOUND LIKE A PGY5 — a short "viva prep" block: the five questions an
+     examiner will ask about this operation and the crisp answers. Directly
+     ladders to the A.3 bar.
+ 11. LINKED PRACTICE — the article's own flashcards and MCQs (C.4), plus links to
+     the matching interactive walkthrough (D.1) and any simulation.
+
+Minimum 500 words is the floor for the smallest skill articles; flagship
+operations (CABG, SAVR, mitral repair, type A dissection, LVAD, going on/off
+bypass) should run 1,500–2,500 words because the step-by-step and complications
+sections carry the PGY5 payload.
+
+C.3  WORKED EXAMPLE — CABG ARTICLE OUTLINE (so authors see the target)
+--------------------------------------------------------------------------------
+To make the template concrete, here is the intended shape and depth of the CABG
+article (author fills the prose to the standards in PART H):
+
+  1. Orientation: "A coronary artery bypass graft reroutes blood around a blocked
+     coronary artery using a spare vessel, restoring flow to starved heart muscle."
+  2. The problem: stable multivessel/left-main disease, the ischemic burden, the
+     SYNTAX/FREEDOM/EXCEL evidence, CABG-vs-PCI for the specific patient
+     (diabetic, low EF, complex anatomy), and when medical therapy wins (ISCHEMIA
+     nuance). Class I indications stated with thresholds.
+  3. Anatomy from scratch: the coronary tree (LM → LAD with diagonals/septals; LCx
+     with OMs; RCA → PDA/PLB), dominance, the grooves the vessels run in, the
+     LIMA behind the chest wall, the saphenous vein and radial artery as conduits,
+     and the danger structures (phrenic on the LIMA pedicle).
+  4. Preop: viability/coronary map in the room, Allen's test for radial, vein
+     mapping, DAPT timing, antibiotics, positioning, arterial line/Swan, TEE.
+  5. Step by step: sternotomy → harvest LIMA (skeletonized vs pedicled) and vein/
+     radial simultaneously → heparinize to ACT > 400 → aortic + venous (two-stage)
+     cannulation → on bypass → cross-clamp + antegrade cardioplegia to arrest →
+     identify targets, arteriotomy → distal anastomoses (LIMA-to-LAD last or per
+     strategy; 7-0/8-0 Prolene, parachute technique) → de-air, remove clamp →
+     proximal anastomoses on partial occlusion clamp (or during a single clamp
+     strategy) → wean from bypass → protamine → hemostasis → wires + drains →
+     sternal closure. Instruments and sutures named at each step; targets stated.
+  6. The numbers: ACT > 400–480; flow index 2.2–2.5; cardioplegia dosing; graft
+     flow measurement (transit-time) acceptable values.
+  7. What goes wrong: incomplete revascularization, graft kinking/tension,
+     LIMA injury/spasm, aortic dissection off the proximal clamp/cannula, RV
+     ischemia from air down the RCA graft, sternal wound (esp. BIMA + diabetes),
+     early graft occlusion presenting as post-op ischemia.
+  8. First 24 h: expected course, the ischemic ECG/enzyme trap, bleeding, AF,
+     the low-output patient.
+  9. Evidence & controversy: LIMA-to-LAD dogma, total-arterial/BIMA, off-pump,
+     hybrid revascularization.
+ 10. PGY5 viva: "Why LIMA to LAD?" "When PCI over CABG?" "Off-pump — who
+     benefits?" "How do you confirm graft patency in the OR?" "Manage new anterior
+     ST changes 2 hours post-op."
+ 11. Practice: 10 flashcards + 8 MCQs + the interactive CABG walkthrough.
+
+Every operation in C.1 gets an article at this level of specificity. Prioritize
+the flagships (C.6) first.
+
+C.4  PER-ARTICLE FLASHCARDS & MCQs (the user's explicit requirement)
+--------------------------------------------------------------------------------
+Each surgery article ships with:
+  - 8–12 flashcards keyed to that operation (front: a question a surgeon would
+    ask; back: the crisp answer + one-line why). Tagged source: "Surgery" and by
+    operation, so they flow into the unified Flashcards tab (PART F.2) and can be
+    filtered to "Surgery only" or by a single operation.
+  - 6–10 MCQs at PGY5 depth, weighted toward step-sequence, instrument/suture
+    choice, numbers, and complication management (not just indication recall).
+  - The article is GATED the same way lessons are: reading it (scroll-complete or
+    an "I've read this" confirmation plus a 3-question read-check) unlocks its
+    cards and MCQs, preserving the app's earn-it philosophy.
+Flashcard/MCQ schemas match the existing ones (fc-<op>-NN, q-<op>-NN) so the
+existing SRS and quiz engines consume them with no special-casing.
+
+C.5  MAKING THE ARTICLES INTERACTIVE (not just long)
+--------------------------------------------------------------------------------
+Each article embeds, inline:
+  - A step PROGRESS RAIL down the side; clicking a step scrolls to it and marks it.
+  - Expandable "surgeon's-eye" callouts (instrument close-ups, suture technique)
+    that stay collapsed for the novice and open for depth.
+  - Inline checkpoint questions between major steps (same pattern the lessons
+    already use) so reading is active.
+  - A "narrate the case" mode at the end: the steps are shuffled and the user
+    reorders them (reuses the existing ordering-exercise engine).
+  - A link to the matching branched Surgery Walkthrough (D.1) — the article
+    teaches; the walkthrough tests the decisions.
+
+C.6  BUILD PRIORITY FOR SURGERIES (flagships first)
+--------------------------------------------------------------------------------
+Tier 1 (build first — highest teaching yield): median sternotomy;
+going on/off cardiopulmonary bypass; CABG (on-pump); SAVR; mitral repair;
+type A aortic dissection repair.
+Tier 2: OPCAB; TAVR; Bentall/root; mitral replacement; ascending/hemiarch;
+durable LVAD; peripheral VA-ECMO cannulation; chest re-exploration for tamponade.
+Tier 3: Ross; David valve-sparing; total arch/FET; TEVAR; tricuspid repair;
+MitraClip/TEER; heart transplant; IABP; pericardial window/pericardiectomy.
+
+Target: Tier 1 complete before any Part-D interactivity work begins, because the
+articles are the substrate the walkthroughs and simulations reference.
+
+C.7  WORKED EXAMPLE — SAVR ARTICLE OUTLINE
+--------------------------------------------------------------------------------
+  1. Orientation: "A surgical aortic valve replacement removes a diseased aortic
+     valve and sews in a new one, relieving the obstruction that is strangling the
+     left ventricle."
+  2. The problem: severe symptomatic AS (Stage D) and asymptomatic severe AS with
+     LV dysfunction, an abnormal exercise test, or very severe gradients; the
+     TAVR-vs-SAVR decision by age and surgical risk (PARTNER 3 and Evolut Low-Risk
+     for younger/low-risk toward TAVR debate, durability and lifetime-management
+     arguments for SAVR in the young); mechanical-vs-tissue by age (~60 threshold)
+     and anticoagulation willingness; the small-annulus and bicuspid problems.
+  3. Anatomy from scratch: the aortic root as a unit — annulus, three sinuses of
+     Valsalva, the right and left coronary ostia sitting in their sinuses, the
+     sinotubular junction, the three commissures, and the fibrous aortomitral
+     curtain; the conduction axis running just beneath the non/right commissure
+     (the reason AVR causes heart block); the relationship of the right coronary
+     ostium to the annulus (the reason a low right-coronary button is a hazard in
+     root work).
+  4. Preop: gradient/AVA/dimensionless index confirmed, coronary angiogram (graft
+     concomitant disease), dental clearance (endocarditis prevention), annular
+     sizing on CT/echo, choice of prosthesis discussed with the patient,
+     group-and-crossmatch, arterial line/Swan/TEE.
+  5. Step by step: median sternotomy → pericardial cradle → heparinize (ACT > 400)
+     → aortic and two-stage venous cannulation, plus a retrograde cardioplegia
+     catheter in the coronary sinus and an LV vent → on bypass → cross-clamp →
+     antegrade cardioplegia to arrest (switch to direct ostial or retrograde once
+     the aorta is open because antegrade will leak through the incompetent valve)
+     → transverse or hockey-stick aortotomy above the STJ → excise the diseased
+     leaflets and debride annular calcium meticulously (do not perforate the
+     annulus or embolize calcium) → size the annulus → place pledgeted
+     interrupted mattress sutures around the annulus (supra- vs intra-annular) →
+     seat and tie the prosthesis → close the aortotomy → de-air thoroughly (air
+     in the aortic root goes down the right coronary and stuns the RV) → remove
+     cross-clamp → wean from bypass, confirm seating and no paravalvular leak on
+     TEE → protamine, hemostasis, wires (heart-block risk!), drains, close.
+  6. The numbers: ACT > 400–480; cross-clamp time expectations for isolated SAVR;
+     antegrade/retrograde cardioplegia dosing intervals; prosthesis sizes and the
+     effective orifice area / patient-prosthesis mismatch threshold (indexed EOA).
+  7. What goes wrong: complete heart block (the conduction axis under the
+     commissure) needing pacing/PPM; paravalvular leak (poor annular sutures or
+     debridement); coronary ostial obstruction (high-seated valve or a low
+     button); annular rupture/AV disruption in a heavily calcified root; patient-
+     prosthesis mismatch in a small annulus (the argument for a root enlargement);
+     air embolism to the RCA causing post-clamp RV dysfunction; stroke from
+     calcium embolization.
+  8. First 24 h: watch the rhythm (transient and permanent block), the gradient/
+     leak on TEE, bleeding, and LV recovery in the previously pressure-overloaded
+     ventricle (diastolic dysfunction, preload dependence).
+  9. Evidence & controversy: TAVR-vs-SAVR by age and risk and the lifetime-
+     management framing; mechanical-vs-tissue and the shrinking age threshold;
+     sutureless/rapid-deployment valves; root enlargement vs mismatch.
+ 10. PGY5 viva: "Why does AVR cause heart block?" "Sizing — how do you avoid
+     patient-prosthesis mismatch?" "New complete heart block post-op — your plan?"
+     "TAVR or SAVR for a fit 68-year-old?" "Why de-air obsessively before the
+     clamp comes off?"
+ 11. Practice: 10 flashcards + 8 MCQs + the SAVR walkthrough.
+
+C.8  WORKED EXAMPLE — TYPE A AORTIC DISSECTION REPAIR (a flagship emergency)
+--------------------------------------------------------------------------------
+  1. Orientation: "An acute type A dissection is a tear in the wall of the
+     ascending aorta that is killing the patient by the hour; the operation
+     replaces the torn segment before it ruptures or shuts off blood to the brain,
+     heart, or body."
+  2. The problem: the ~1–2%/hour mortality of untreated type A, the Stanford A
+     (any ascending involvement = surgical) vs B distinction, malperfusion
+     syndromes (cerebral, coronary, mesenteric, renal, limb) and how they change
+     the plan, and the contraindication landscape (the operation is almost always
+     indicated because the alternative is death).
+  3. Anatomy from scratch: the three-layered aortic wall and what a "true vs false
+     lumen" means; the ascending aorta, arch and its head vessels (innominate,
+     left carotid, left subclavian), the aortic root and coronary ostia (a
+     dissection flap can occlude the RCA and cause inferior MI), and the
+     brachiocephalic anatomy that drives cannulation choice.
+  4. Preop: this is a resuscitation-and-go — gated CT angiogram of the whole aorta,
+     blood pressure and pain control to permissive parameters, massive-transfusion
+     readiness, TEE, and rapid consent; the clock is the enemy.
+  5. Step by step: arterial cannulation chosen to give antegrade true-lumen flow
+     (right axillary/subclavian, or central/femoral with awareness of retrograde
+     false-lumen risk) → venous cannulation, cool the patient → on bypass, cool to
+     the target for circulatory arrest → cross-clamp if feasible, arrest the heart
+     → open the aorta, identify the primary entry tear → deep hypothermic (or
+     moderate + antegrade cerebral perfusion via the axillary/innominate)
+     circulatory arrest to inspect and repair the arch → resect the torn segment,
+     obliterate the false lumen (glue/felt/sandwich), and reconstruct: a
+     supracoronary graft for a limited tear, a hemiarch for arch involvement, a
+     full root replacement (Bentall) or valve-sparing root if the root/valve is
+     involved, and a frozen elephant trunk for extensive arch/descending disease →
+     re-establish antegrade perfusion, rewarm → de-air, wean, meticulous hemostasis
+     (dissected tissue bleeds everywhere) → close.
+  6. The numbers: the temperature targets for circulatory arrest strategies, safe
+     antegrade-cerebral-perfusion flows, the arrest-time thresholds that drive the
+     hypothermia depth, ACT on bypass.
+  7. What goes wrong: malperfusion that persists after repair, coronary
+     involvement needing a graft, catastrophic coagulopathic bleeding, stroke from
+     the arch work or cannulation strategy, spinal cord injury with extensive
+     descending work, and the reperfusion physiology of a cooled, arrested patient.
+  8. First 24 h: neurologic exam is king (did we protect the brain?), bleeding and
+     the coagulopathy, malperfusion reassessment, blood-pressure control to
+     protect the repair and any residual downstream dissection.
+  9. Evidence & controversy: cannulation-site debate (axillary vs central vs
+     femoral), DHCA vs moderate hypothermia + ACP, hemiarch vs total arch vs FET,
+     and how aggressive to be on the root.
+ 10. PGY5 viva: "Type A on the CT — what are the first three things you do?"
+     "Why does cannulation site matter here?" "How do you protect the brain during
+     arch repair?" "Inferior ST changes with the dissection — what's happening?"
+     "Hemiarch or total arch — how do you decide?"
+ 11. Practice: 8 flashcards + 8 MCQs + the 2 a.m.-dissection crisis simulation.
+
+C.9  WORKED EXAMPLE — FOUNDATIONAL SKILL: GOING ON AND OFF BYPASS
+--------------------------------------------------------------------------------
+This is a "skill" article (shorter than a flagship operation but still full-depth)
+and it is the connective tissue of every pump case, so it is Tier 1.
+  1. Orientation: "Going on bypass hands the job of the heart and lungs to a
+     machine so the surgeon can stop and open the heart; coming off gives the job
+     back — and both handoffs are where patients are lost."
+  2. The problem/why: every open-heart operation lives inside this maneuver; doing
+     it smoothly and recognizing when it is going wrong is a core PGY-competency.
+  3. Anatomy from scratch: the ascending aorta (arterial inflow), the right atrium
+     and cavae (venous drainage), the coronary sinus (retrograde cardioplegia), and
+     the LV/pulmonary veins (venting) — i.e., every cannulation site and why.
+  4. Preop/setup: heparinize and confirm ACT > 400 BEFORE any cannula goes in,
+     purse-string sutures, the sequence of aortic-then-venous cannulation, and
+     de-airing the lines.
+  5. Step by step — GOING ON: confirm ACT → cannulate aorta (test with a small
+     flow — a flat/blunted trace or a discolored aorta means dissection, STOP) →
+     cannulate the venous cavae/RA → connect and de-air → perfusionist initiates
+     forward flow, drains venous return, the heart empties → verify the MAP,
+     venous return, and that the face/pupils/oxygenator look right → cross-clamp,
+     deliver cardioplegia, arrest → operate.
+     Step by step — COMING OFF: rewarm to normothermia → de-air the heart
+     thoroughly (TEE-guided) → remove cross-clamp, let the heart reperfuse and
+     recover a rhythm (pace or defibrillate as needed) → resume ventilation →
+     gradually reduce pump flow while the perfusionist fills the heart, watching
+     the arterial trace and TEE as the ventricle takes over → wean fully, assess
+     the hemodynamics and the repair on TEE → give protamine slowly (watch for
+     reaction) → decannulate → hemostasis.
+  6. The numbers: ACT > 400–480; flow index 2.2–2.5 L/min/m2; MAP targets;
+     the "empty and beating vs arrested" states; protamine dosing to reverse.
+  7. What goes wrong: aortic dissection on cannulation (the flat trace); venous
+     air lock / poor drainage (rising reservoir, low return); the "won't come off
+     pump" differential (residual ischemia/incomplete revascularization, valve
+     problem, RV failure, arrhythmia, air down the RCA, tamponade physiology,
+     protamine reaction, vasoplegia); protamine reactions (three types).
+  8. First minutes/hours: the newly-weaned heart is fragile — preload, rhythm,
+     and afterload all matter; low output here triggers the LCOS algorithm (B.13).
+  9. Evidence & controversy: temperature and de-airing strategies; centrifugal vs
+     roller pumps; minimally invasive cannulation.
+ 10. PGY5 viva: "You start bypass and the arterial line pressure goes flat — what
+     is it until proven otherwise, and what do you do?" "Walk me through weaning."
+     "The heart won't come off pump — give me your differential." "Why give
+     protamine slowly?"
+ 11. Practice: 8 flashcards + 8 MCQs + the going-on-bypass walkthrough and the
+     dissection-on-cannulation crisis sim.
+
+C.10 SAMPLE PRACTICE ITEMS (the register the surgery flashcards/MCQs must hit)
+--------------------------------------------------------------------------------
+To calibrate authors, here are model items for the CABG article (author produces
+8–12 cards and 6–10 MCQs per article at this level):
+  Flashcard (front): "Why is the LIMA-to-LAD graft the cornerstone of every CABG?"
+  Flashcard (back): "The internal mammary is uniquely resistant to atherosclerosis
+     (its endothelium produces nitric oxide and it has a non-fenestrated internal
+     elastic lamina), so LIMA-to-LAD patency exceeds ~90% at 10 years and drives
+     the survival benefit of surgery — which is why it is protected and placed to
+     the most important vessel, the LAD."
+  MCQ (judgment level): "You are 2 hours out from an on-pump CABG (LIMA-LAD, SVG
+     to OM and PDA). The monitor shows new ST elevation in II, III, aVF and the
+     patient becomes hypotensive. What is the most likely mechanism and the next
+     best step?" Options include air/kinking of the RCA-territory graft (correct
+     mechanism), and the next step (echo/return to OR / graft interrogation) vs
+     distractors (give fluid alone, uptitrate pressor alone, thrombolyse). The
+     explanation teaches why an early territory-specific change points to a graft
+     problem and why the answer is to interrogate/revise, not to medicate around it.
+  MCQ (step/sequence level): "During an on-pump CABG, which must be true BEFORE the
+     aortic cannula is placed?" Answer: ACT confirmed > 400 (heparinized). The
+     explanation teaches the catastrophe of cannulating an unheparinized aorta.
+These show the target: cards and questions that test JUDGMENT, SEQUENCE, NUMBERS,
+and COMPLICATIONS — not just "what is the indication."
+
+================================================================================
+PART D — INTERACTIVITY OVERHAUL: FROM READING TO DOING
+================================================================================
+
+The app currently has two interactive modes (ordering + label-the-diagram). PGY5
+thinking is decision-making under constraints, so the new interactivity is built
+around DECISIONS and MANIPULATION, not recall.
+
+D.1  SURGERY WALKTHROUGHS (branched operative decision trees)
+--------------------------------------------------------------------------------
+For each Tier-1/2 operation, a branched, step-by-step "you are operating"
+walkthrough, separate from but linked to the article:
+  - At each step the user chooses the next move from realistic options (e.g.,
+    "the aortic pressure trace goes flat as you start bypass — your move?" →
+    options include "call dissection, stop, re-cannulate" [correct] vs "increase
+    flow" [worsens]).
+  - Wrong choices branch to a consequence and a teaching recovery, not just "X."
+  - Correct paths advance; the walkthrough tracks a "smoothness" score.
+  - Completion awards XP (reuse addXP/streak) and contributes to operation mastery.
+Isolate this as its own module (js/surgery/, css/surgery.css, window.Surgery,
+route #/surgery/<op>/walkthrough) with its own validator, mirroring how the
+Trials and Anatomy modules are already isolated so app.js risk is contained.
+
+D.2  PHYSIOLOGY LABS (live, slider-driven curves)
+--------------------------------------------------------------------------------
+The highest-leverage way to teach PGY5 physiology is to let the student MOVE the
+curve. Build a Physiology Labs module (js/physiology/, window.Physio,
+route #/physiology) with these live simulations:
+  - LV pressure-volume loop: sliders for preload, afterload, and contractility;
+    presets for AS, AR, MR, MS, tamponade, and a normal loop; the loop redraws
+    live and reports EF, stroke work, and EDP. The single best tool for valve and
+    heart-failure physiology.
+  - Frank-Starling / ventricular function family of curves, with the effect of
+    inotropes and failure shown as curve shifts.
+  - Coronary supply/demand balance beam (ties to B.2): interventions tip the beam.
+  - CPB oxygen delivery: sliders for flow index, hematocrit, and temperature that
+    compute DO2 and show the safe/unsafe zone (ties to B.10).
+  - IABP timing: a drag-the-inflation-point trace where early/late inflation and
+    deflation produce the classic waveform errors.
+  - Valve gradient/orifice relationship (continuity equation made visual).
+Each lab has a short "what am I looking at" preface, 3–5 guided tasks
+("make this loop look like aortic stenosis"), and awards XP on task completion.
+
+Fully-specified example lab — "THE PRESSURE-VOLUME LOOP" (author target for depth):
+  - Canvas: a live LV pressure (y) vs volume (x) loop with the ESPVR (end-systolic
+    pressure-volume relationship, the contractility line) and the EDPVR (the
+    passive filling curve) drawn as the bounding rails; the four phases labeled
+    (filling, isovolumic contraction, ejection, isovolumic relaxation).
+  - Sliders: PRELOAD (shifts the filling volume / loop width), AFTERLOAD (the
+    arterial elastance line the loop ejects against), and CONTRACTILITY (rotates
+    the ESPVR slope). Each slider redraws the loop in real time and updates a
+    readout: EDV, ESV, stroke volume, ejection fraction, and stroke work (the loop
+    area).
+  - Presets that snap the loop to a disease so the student SEES the pathology:
+      * Aortic stenosis: tall, narrow loop with a high systolic pressure (the LV
+        generates huge pressure to eject across the fixed obstruction) and
+        concentric hypertrophy physiology.
+      * Aortic regurgitation: wide loop shifted right, no true isovolumic phases
+        (the leaky valve means filling and ejection blur), large stroke volume,
+        eccentric/volume overload.
+      * Mitral regurgitation: the loop loses its isovolumic contraction phase (the
+        LV unloads backward into the LA the instant pressure rises), high total
+        stroke volume masking forward failure.
+      * Mitral stenosis: an under-filled loop (the LV is preload-starved behind the
+        tight valve), small stroke volume, with the disease living upstream.
+      * Tamponade: a small, cramped loop from impaired filling.
+  - Guided tasks (each awards XP): "Drag the sliders until this loop shows aortic
+    stenosis, then explain in one line why the systolic pressure is so high."
+    "Show what an acute afterload increase does to stroke volume." "Load the AR
+    preset and explain why there is no true isovolumic relaxation phase." Each task
+    reveals a model explanation for self-check and links to the matching Day-3
+    valve lesson.
+  - Why it is the flagship lab: valve disease, heart failure, and the entire logic
+    of afterload reduction and inotropes become visual and manipulable. A student
+    who can drive this loop to each preset and narrate why has crossed from
+    "memorized the murmur" to "understands the ventricle" — the A.3(f) bar.
+
+D.3  CRISIS SIMULATIONS (the code-scenario engine)
+--------------------------------------------------------------------------------
+A timed, branched scenario engine for the low-frequency/high-lethality events:
+  - Post-bypass RV failure; protamine reaction; malignant hyperthermia; massive
+    air embolism; aortic dissection on cannulation; sudden VF; the bleeding chest
+    (ties to B.11); tamponade at the bedside; vasoplegia refractory to pressors;
+    the 2 a.m. type A dissection (B.8).
+  - Each scenario: an evolving vitals panel, a decision every N seconds, branching
+    consequences, and an after-action debrief that scores recognition speed and
+    correctness and links back to the relevant lesson/article.
+Reuses the walkthrough engine with a clock. This is what converts "I read about
+vasoplegia" into "I have managed vasoplegia ten times."
+
+Fully-specified example scenario — "PROTAMINE REACTION" (so authors see the depth):
+  - Setup: isolated SAVR, weaning complete, TEE looks good, perfusionist begins
+    protamine. Vitals panel starts normal.
+  - Beat 1 (t+15s): systemic pressure falls, PA pressure rises sharply, the heart
+    distends on TEE, the field goes tense. Decision: "What is happening?" Options —
+    (a) type II/III protamine reaction with pulmonary vasoconstriction [correct],
+    (b) LV failure, (c) tamponade, (d) inadequate reversal. Wrong picks branch to a
+    consequence and a teaching nudge back.
+  - Beat 2: "Immediate actions?" Multi-select — STOP the protamine, call it out to
+    the team, support the circulation (fluids/pressor, consider re-heparinize and
+    go back on pump), treat the pulmonary hypertension, be ready to re-establish
+    bypass. Half-measures (e.g., just push more pressor) worsen the trace.
+  - Beat 3: "The RV is failing from the acute pulmonary hypertension — next?"
+    Options include going back on bypass to rest the heart, inhaled pulmonary
+    vasodilator, inotropic RV support; the sim rewards recognizing that reloading
+    the failing RV against high PVR is the danger.
+  - Debrief: scores recognition speed and the correctness of the ordered actions,
+    names the three protamine-reaction types, and links to the Day-11 hemostasis
+    lesson and the going-off-bypass article. Each crisis scenario is authored to
+    this level: 3–6 branching beats, an evolving vitals panel, consequence
+    branches for wrong turns, and a debrief that links back to the source content
+    and feeds the mastery model.
+
+Minimum crisis library to ship in Phase 4 (three of these): protamine reaction,
+aortic dissection on cannulation, post-bypass RV failure, the bleeding chest,
+tamponade at the bedside, refractory vasoplegia, sudden VF on the table, massive
+air embolism, and the 2 a.m. type A dissection (the long-form flagship sim).
+
+D.4  IMAGING READ-OUT LIBRARY (annotated loops & stills with hotspot drills)
+--------------------------------------------------------------------------------
+Transforms Day 4 and every imaging-adjacent topic:
+  - A library of TEE views, coronary angiograms, dissection CTs, and post-op echos
+    (schematic/illustrated where real DICOM cannot be licensed — the app is a
+    static site, so use high-quality diagrams/annotated stills authored in SVG).
+  - Hotspot questions ("click the entry tear," "grade this AS," "name this view,"
+    "which coronary segment is occluded").
+  - A spaced set so imaging recognition itself enters the SRS.
+Note on assets: because the app is offline/static and must respect licensing,
+default to authored SVG/illustration and clearly-licensed teaching images; do not
+embed copyrighted clinical media. Where a real loop is essential, link out rather
+than embed.
+
+D.5  BEDSIDE MANAGEMENT PANELS (titrate-the-drip and program-the-box)
+--------------------------------------------------------------------------------
+Small, focused interactives embedded in the ICU/pacing content:
+  - A drip-titration panel (choose and dose pressors/inotropes; watch the
+    hemodynamic profile respond) for the LCOS/vasoplegia algorithms.
+  - A pacemaker programmer (set mode/rate/output/sensitivity to the clinical
+    problem) for Day 12.
+  - A TEG/ROTEM interpreter drill for Day 11.
+
+D.6  MAKE EXISTING INTERACTIVITY SMARTER
+--------------------------------------------------------------------------------
+  - Ordering exercises: add a "why this order" reveal and penalize impossible
+    orderings (e.g., cross-clamp before cannulation) with a teaching message.
+  - Label-the-diagram: add the "danger structures" layer from B.1 and a timed
+    recognition mode.
+  - Every interactive should award XP and feed a per-topic mastery score (F.3).
+
+================================================================================
+PART E — VISUAL & EXPERIENCE OVERHAUL
+================================================================================
+
+Use the ui-ux-pro-max skill and its WCAG checklist for all visual work. The goal
+is a product that looks like a premium medical-education app, not a class project,
+while staying a fast, offline, dependency-light static site.
+
+E.1  DESIGN SYSTEM
+--------------------------------------------------------------------------------
+  - Refresh the token layer: a disciplined color system (a clinical, trustworthy
+    base with the existing cyan→violet accent used purposefully for "engine"
+    surfaces), a real type scale, consistent spacing, radius, and elevation
+    tokens. Keep Sora/Figtree pairing (it reads well) but tighten hierarchy.
+  - Component library pass: cards, kboxes (mnemonic/pearl/danger/study),
+    buttons, chips, progress rings, nav, badges, tables, and the new
+    article/step-rail components — all consistent, all themeable.
+  - Motion: subtle, purposeful transitions (flashcard flip, loop redraw, step
+    advance); everything gated behind prefers-reduced-motion.
+
+E.2  ACCESSIBILITY (non-negotiable)
+--------------------------------------------------------------------------------
+  - WCAG 2.2 AA: 4.5:1 text contrast verified in both themes; visible focus rings;
+    full keyboard operability (flashcard grades on 1–4 already — extend the
+    pattern); ARIA on the interactive engines; the diagrams get text alternatives.
+  - Dark mode as a first-class theme, not an afterthought; verify every new
+    component in both.
+
+E.3  INFORMATION DESIGN FOR DEPTH WITHOUT OVERWHELM
+--------------------------------------------------------------------------------
+  - The core-vs-Attending-Rounds layering (PART B) is expressed visually: a clear
+    "you are here / deeper available" affordance so novices are not buried and
+    advanced users can dive.
+  - Progressive disclosure in the surgery articles (collapsed surgeon's-eye
+    callouts, expandable evidence blocks).
+  - A consistent "numbers" styling so the quantitative targets are instantly
+    scannable and become the thing the eye returns to.
+  - Data-viz styling for the physiology labs and progress charts that is legible,
+    colorblind-safe, and consistent with the dataviz palette guidance.
+
+E.4  FIX THE ROT AND UNIFY
+--------------------------------------------------------------------------------
+  - Eliminate any residual "ScalpelSchool" strings; one brand, "CardiacSchool."
+  - Merge the two flashcard systems (curriculum SRS + anatomy cloze deck) into ONE
+    Flashcards tab with filters (see F.2); remove the separate "Anatomy
+    Flashcards" nav entry while keeping the Anatomy Review regions.
+  - Correct the known data bugs (arterial/venous mis-tags, non-coronary vessels
+    mis-filed under "coronary," empty embryology region).
+
+E.5  MOBILE & OFFLINE
+--------------------------------------------------------------------------------
+  - The bottom-nav mobile pattern already exists; ensure the new Surgeries,
+    Physiology, and Simulation routes are reachable and thumb-friendly.
+  - Consider a service worker for true offline use and an "install as app" (PWA)
+    manifest so a resident can use it on the ward without signal. This is a small
+    change with large perceived-quality payoff for a study tool.
+
+================================================================================
+PART F — ASSESSMENT, SPACED REPETITION & THE "PGY5 CERTIFICATION" LAYER
+================================================================================
+
+F.1  RAISE THE MCQ CEILING
+--------------------------------------------------------------------------------
+  - Add a second question TYPE beyond single-best-answer: clinical vignettes that
+    chain (a two- or three-step case where the second question depends on the
+    first answer), and "which is the NEXT best step" items — the format oral
+    boards and Royal College favor.
+  - Tag every MCQ by cognitive level (recall / application / judgment) so the app
+    can serve harder items as mastery rises and so "PGY5 mode" can filter to
+    judgment-level only.
+  - Ensure every MCQ explanation teaches the distractors, not just the key
+    (the existing explanations already do this well — hold that standard).
+
+F.2  UNIFY AND UPGRADE SPACED REPETITION
+--------------------------------------------------------------------------------
+  - One Flashcards tab, one SRS engine, one localStorage namespace. Merge the
+    curriculum cards, anatomy cloze deck, and the new Surgery cards into a single
+    filterable deck (All / Curriculum / Anatomy / Surgery / by day / by topic /
+    by operation) with a single unified due-count in the nav badge.
+  - Keep the flip + Again/Hard/Good/Easy + keys 1–4 interaction (it works).
+  - Curriculum/surgery cards stay lesson/article-gated; anatomy cards stay
+    always-available. Preserve progress on migration.
+  - Add a "leech" surfacing (cards repeatedly failed) and a weakness-weighted new-
+    card selection so the SRS actually targets the user's gaps.
+
+F.3  MASTERY MODEL (per-topic, not just global XP)
+--------------------------------------------------------------------------------
+  - Replace the single XP number with a per-domain mastery map (Anatomy, Coronary,
+    Valves, Aorta, CPB, MCS, ICU, Hemostasis, Rhythm, plus per-operation mastery
+    for the Surgeries tab). Mastery rises from lesson completion, SRS retention,
+    MCQ accuracy at judgment level, walkthrough smoothness, and simulation scores.
+  - Surface it as a radar/heat map on the Progress page so the student sees, at a
+    glance, "you are PGY5 on valves, PGY2 on the aorta — drill the aorta."
+  - Keep XP/streaks/badges as the engagement layer on top.
+
+F.4  THE PGY5 CERTIFICATION (replaces the single mock exam)
+--------------------------------------------------------------------------------
+Day 14 becomes a multi-stage capstone that actually tests the A.3 bar:
+  - Stage 1: a broad written exam (the existing 75-MCQ format, but drawn to hit
+    every domain and weighted to judgment-level items).
+  - Stage 2: two "long cases" — a patient dossier the user works end to end
+    (indication → operation choice → operative plan → predicted complications →
+    first-24-h plan), scored against a rubric derived from A.3(a)–(f).
+  - Stage 3: a rapid-fire viva — 15–20 "what's the next step / why / what's the
+    exception" items on a clock, oral-board style.
+  - Stage 4: one crisis simulation run cold (from D.3), scored on recognition and
+    management.
+  - A pass on all four unlocks a "PGY5-Ready" credential on the dashboard. This
+    gives the whole app a summit to climb toward and makes "PGY5 level" a thing
+    the app can actually award, not just claim.
+
+================================================================================
+PART G — EXPONENTIAL IMPROVEMENTS (raise the ceiling, not just the floor)
+================================================================================
+
+These are the ideas that change what the app IS, ordered by leverage.
+
+G.1  A "CASE OF THE DAY" ENGINE
+    A daily generated (from a large authored case bank) integrated case that
+    forces synthesis across domains — the single best habit-former and the thing
+    that most resembles real training. Feeds mastery and streaks.
+
+G.2  ADAPTIVE PATHING
+    Use the mastery map (F.3) to reorder what the app surfaces: weak domains get
+    more new cards, harder MCQs, and targeted walkthroughs; strong domains get
+    maintenance-only SRS. The 14-day spine becomes the default, not the ceiling.
+
+G.3  A SPACED-REPETITION LAYER OVER IMAGING AND OPERATIVE STEPS
+    Not just facts — put "name this view," "what's the next operative step," and
+    "grade this lesion" into the SRS so recognition and sequence become durable.
+
+G.4  "TEACH-BACK" / FREE-RECALL PROMPTS
+    Periodically, instead of an MCQ, ask the user to type a free-text answer
+    ("explain why LIMA-to-LAD," "narrate weaning from bypass") and then reveal a
+    model answer for self-grading. Free recall beats recognition for retention and
+    directly rehearses the viva. (Self-graded to stay offline and dependency-free;
+    an optional LLM-graded mode is a natural later add if connectivity is allowed.)
+
+G.5  A GLOSSARY / QUICK-REFERENCE LAYER
+    A hover/tap glossary so any term (EROA, TAPSE, del Nido, INTERMACS) expands in
+    place, plus a searchable "numbers" reference (every threshold and target in the
+    app on one filterable page). This is what residents actually want at 3 a.m.
+
+G.6  AUDIO MODE
+    Short authored audio narrations of the surgery articles and Attending Rounds
+    for commute/pre-round listening. Even text-to-speech of the existing prose is a
+    meaningful accessibility and engagement win.
+
+G.7  A "PIMP QUESTIONS" DECK PER TOPIC
+    The classic OR pimping questions ("what's the blood supply to the SA node?"
+    "why does the mammary stay open?") as a rapid-fire mode — the highest-morale,
+    most-shared feature a surgical study app can have.
+
+G.8  SHAREABLE PROGRESS & LIGHT SOCIAL
+    Exportable mastery/credential cards and an optional local leaderboard for a
+    clerkship group. Purely opt-in; keep the app offline-first and privacy-first.
+
+G.9  INSTRUCTOR/CLERKSHIP MODE
+    A way for a clerkship director to define the day-1 date, required modules, and
+    a target completion, and to hand the app to a rotation of students. Turns a
+    personal tool into a program-adoptable curriculum.
+
+G.10 CONTENT PROVENANCE & UPDATING
+    Every threshold/trial statement carries a lightweight source tag (guideline
+    year, trial name) so the content is auditable and can be updated as guidelines
+    change. Cardiac surgery evidence moves; the app should be maintainable, not
+    frozen.
+
+================================================================================
+PART H — CONTENT AUTHORING STANDARDS (one voice, PGY5 register)
+================================================================================
+
+So that thousands of new words read as one authored resource:
+
+  - VOICE: precise, confident, senior-resident register. Explain mechanism first,
+    then evidence, then exception. Never hand-wave a "why."
+  - EVERY claim that carries a number states the number, and where a threshold
+    comes from a guideline or trial, name it.
+  - LEAD WITH PROSE: each teaching chunk opens with 1–2 explanatory paragraphs
+    before any list (the existing lessons already do this — hold the line).
+  - KBOXES used deliberately: mnemonic / pearl / danger / study, each with the
+    opening tag div, never as decoration.
+  - ASSUME ZERO PRIOR KNOWLEDGE at the top of every surgery article and EVERY
+    Attending Rounds module, then climb to PGY5 by the end. The novice must be
+    able to start cold; the senior must find something new by the end.
+  - AUTHORING HYGIENE (matches the existing build rules): real, balanced HTML;
+    no backtick or ${ inside content strings; globally unique ids in the
+    established formats (fc-*, q-*, lesson ids, surgery ids); 0-based answer index
+    with a teaching explanation that addresses the distractors.
+  - EVERY new content unit must pass the relevant validator at 0 errors before it
+    is considered done, and must node --check clean. New modules ship their own
+    validator, mirroring the anatomy/trials isolation pattern.
+  - GROUNDING: build from the existing source set (cardiac_surgery_guide_v3.pdf,
+    the primer, the anatomy deck) plus current guideline/trial knowledge; do not
+    invent statistics — every stat is traceable.
+
+================================================================================
+PART I — PRIORITIZED ROADMAP & ACCEPTANCE CRITERIA
+================================================================================
+
+The work is large; sequence it so each phase ships a coherent, shippable jump in
+value. Content phases carry no app.js/style.css collision risk and can run in
+parallel pods; engine phases are serialized on the single-writer files.
+
+PHASE 1 — FOUNDATION FIXES & UNIFICATION (fast, high trust)
+  - Unify the two flashcard systems into one filterable Flashcards tab (F.2).
+  - Fix data rot: ScalpelSchool strings, anatomy mis-tags/mis-files, empty region.
+  - Visual token/component refresh + WCAG pass (E.1–E.4).
+  Acceptance: one Flashcards tab with working filters and a single due-count; all
+  existing validators at 0 errors; WCAG AA verified in both themes; no
+  ScalpelSchool strings.
+
+PHASE 2 — THE SURGERIES TAB, TIER 1 (the headline deliverable)
+  - Build the Surgeries nav/section and the article template (C.1–C.2).
+  - Author Tier-1 articles (C.6) to full depth, each with 8–12 flashcards and
+    6–10 MCQs, gated like lessons, flowing into the unified SRS.
+  Acceptance: six Tier-1 operations live, each ≥ the word floor (flagships
+  1,500–2,500), each with practice attached and its own validator at 0 errors; a
+  reader can go from zero to narrating the case.
+
+PHASE 3 — DEPTH LAYER ON THE 14 DAYS (PGY5 ceiling)
+  - Add the "Attending Rounds" advanced module to every day (PART B), each with
+    density targets met, plus the day's linked interactive.
+  Acceptance: every day has an unlockable advanced module; content hits the A.3
+  bar; flashcard/MCQ counts grow to full coverage (target ~500 cards / ~350 MCQs
+  across curriculum + surgery); validators 0 errors.
+
+PHASE 4 — INTERACTIVITY ENGINES
+  - Physiology Labs (D.2), Surgery Walkthroughs for Tier-1/2 (D.1), Crisis
+    Simulations (D.3), imaging read-out drills (D.4), bedside panels (D.5).
+  Each engine isolated in its own dir with its own validator, awards XP, and links
+  to its article/lesson.
+  Acceptance: each engine live and reachable, awards XP, passes its validator; the
+  physiology loop can be driven to AS/AR/MR/tamponade presets; at least the
+  Tier-1 walkthroughs and three crisis sims ship.
+
+PHASE 5 — ASSESSMENT & MASTERY
+  - Mastery map + radar (F.3); the PGY5 Certification capstone (F.4); MCQ
+    cognitive-level tagging and vignette chaining (F.1).
+  Acceptance: Progress page shows per-domain mastery; Day 14 runs the four-stage
+  certification and can award "PGY5-Ready"; judgment-level filtering works.
+
+PHASE 6 — EXPONENTIAL LAYER (as capacity allows)
+  - Case of the Day (G.1), adaptive pathing (G.2), teach-back free recall (G.4),
+    glossary/numbers reference (G.5), PWA/offline (E.5), pimping deck (G.7),
+    audio (G.6), instructor mode (G.9), provenance tags (G.10).
+
+GLOBAL ACCEPTANCE (every phase): all validators (validate.js, validate-anatomy.js,
+validate-trials.js, and each new module validator) at 0 errors; every route
+smoke-tested; XP/gating/dark-mode/mobile intact; new engines award XP; the
+ongoing_memory.md and the cardiacschool-build memory updated.
+
+THE ONE-SENTENCE TEST FOR "DONE": a student who completes this app can be handed a
+new cardiac-surgery patient and, unprompted, argue the indication with the trial,
+choose and defend the operation, narrate it step by step with the numbers,
+anticipate what goes wrong, and run the first 24 hours — i.e., think like a PGY5.
+
+================================================================================
+APPENDIX J — BUILD INVENTORY (the concrete list of deliverables to author)
+================================================================================
+This appendix converts the plan into a countable backlog so progress is trackable.
+
+J.1  SURGERY ARTICLES (article + flashcards + MCQs + linked interactive each)
+  Tier 1 (flagships, 1,500–2,500 words): median sternotomy; going on/off bypass;
+    CABG (on-pump); SAVR; mitral repair (degenerative); type A dissection repair.
+  Tier 2 (800–1,500 words): OPCAB; TAVR; Bentall root; mitral replacement;
+    ascending/hemiarch replacement; durable LVAD implant; peripheral VA-ECMO
+    cannulation; chest re-exploration for tamponade/bleeding.
+  Tier 3 (500–1,200 words): Ross; David valve-sparing root; total arch + frozen
+    elephant trunk; TEVAR; tricuspid repair; MitraClip/TEER; heart transplant;
+    IABP insertion; aortic/venous cannulation (skill); cardioplegia delivery
+    (skill); de-airing (skill); sternal closure (skill); redo sternotomy (skill);
+    pericardial window/pericardiectomy.
+  Total: ~28 articles. Each contributes 8–12 flashcards and 6–10 MCQs, i.e.
+  roughly 250–330 new surgery flashcards and 170–280 new surgery MCQs on top of
+  the existing curriculum bank.
+
+J.2  ATTENDING ROUNDS MODULES (one per day, Days 1–13)
+  13 advanced modules (PART B), each ~6–10 chunks, 8–12 flashcards, 6–10 MCQs,
+  one interactive, and one link to a surgery/simulation. Roughly 100–150 new
+  flashcards and 80–130 new MCQs.
+
+J.3  INTERACTIVE ENGINES
+  Physiology Labs: 6 labs (PV loop, Frank-Starling, coronary balance beam, CPB
+    DO2, IABP timing, valve continuity). Own module + validator.
+  Surgery Walkthroughs: Tier-1 + Tier-2 operations (~14 branched walkthroughs).
+  Crisis Simulations: ≥9 scenarios (D.3). Own module + validator.
+  Imaging Read-Out Library: ≥4 categories (TEE / angiogram / dissection CT / post-op
+    echo) with hotspot drills feeding the SRS.
+  Bedside Panels: drip-titration, pacemaker programmer, TEG/ROTEM interpreter.
+
+J.4  PLATFORM / SYSTEM WORK
+  Unified Flashcards tab + single SRS namespace + filters + leech surfacing.
+  Mastery map + Progress radar. PGY5 Certification capstone (4 stages).
+  Visual/token/component refresh + WCAG AA in both themes. PWA/offline. Glossary +
+  searchable "numbers" reference. Provenance tags on every threshold/trial claim.
+
+J.5  ROUGH SCALE OF THE CONTENT LIFT
+  From today's ~285 flashcards / ~192 MCQs / 43 lessons to a target of roughly
+  650–750 flashcards, 450–600 MCQs, 43 core lessons + 13 advanced modules + ~28
+  surgery articles, plus ~30 interactive units across the four new engines. This
+  is a multi-phase program; PART I sequences it so each phase ships standalone
+  value and every phase ends with all validators at 0 errors and a working app.
+================================================================================

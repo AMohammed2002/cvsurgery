@@ -1,0 +1,16 @@
+ECG cases: 10
+Physiology assertions: 7193
+Failures: 0
+Renderer assertions: 39
+Failures: 0
+Cath projection plates: 11 | labels: 59
+Assertions: 338
+Failures: 0
+OR monitor tests passed: 4 cases, 77 normal milestones, 35 complication branches.
+Physiology labs: 14
+Lab ids: pv-loop, oxygen-delivery, valve, shock, ecg, pacing, cpb-console, cpb-surgery, cannulation, cardioplegia, iabp, teg-rotem, cath-projections, or-monitor
+Source anchors: 56
+Objectives: 65
+Interaction gates: rotary controls, live ECG/pacing, physical CPB, live IABP/TEG, routed cannulation/cardioplegia, full-case OR monitoring
+Layout gates: full-width physiology shell, shrinkable app grid, CPB container reflow, shared studio layouts
+Errors: 0

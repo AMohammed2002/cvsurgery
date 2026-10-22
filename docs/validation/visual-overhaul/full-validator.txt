@@ -1,0 +1,36 @@
+Lessons: 44
+Flashcards: 2644
+Cloze cards by day: {"1":92,"2":169,"3":104,"4":51,"5":116,"6":36,"7":99,"8":88,"9":95,"10":95,"11":68,"12":69,"13":128,"14":28,"null":24}
+Questions: 1056
+Questions by day: {"1":92,"2":70,"3":69,"4":117,"5":69,"6":69,"7":69,"8":93,"9":70,"10":70,"11":69,"12":70,"13":70,"14":59}
+Exercises: 8
+
+--- WARNINGS (0) ---
+--- ERRORS (0) ---
+Image placement validation passed
+Registry images: 314
+Placement slots: 347
+Covered images: 314
+Explicit cover exclusions: 2
+WebP corpus: 24.01 MiB
+Surface slots: anatomy=24, angiography=13, crisis=14, exercise=7, integration=14, lesson=207, physiology=13, surgery=54, trials=1
+Fixed crosswalk: 192/192 destinations across 23 rows
+Comprehensive supporting-module cloze pack
+  total=550
+  byType={"physiology":192,"evidence":160,"viva":70,"angiography":128}
+  physiologyLabs=12 trials=20 vivas=14
+  legacyCaseCards=0 crisisCards=0 exercises=8
+  angioSections=48 angioCases=16
+  longestClozeAnswer=159 chars / 24 words
+
+Module flashcard validation: PASS
+Canonical runtime: 2644 active cards; 1989 retrieval-v2; 133 rebuilt sources
+PASS canonical IDs, rendered clozes, v2 replacement, source resolution, and day unions
+Uniform retrieval-card validator
+  canonical=2644 v2=1989 legacy=655 claims=2284 pending-numeric-review=77 pending-clinician-claims=2284
+  note: 77 non-guideline numeric card(s) explicitly remain pending clinical review
+  note: 2284 claim(s) remain blocked from clinical release pending named clinician sign-off
+
+Legacy transition audit (non-blocking)
+  total=655 malformed=0 multi-cloze=101 answer>8w=12 prompt>30w=252 multi-sentence=19 weak-cue=140
+  surgery: total=655 malformed=0 multi-cloze=101 answer>8w=12 prompt>30w=252 multi-sentence=19 weak-cue=140

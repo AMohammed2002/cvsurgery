@@ -1,0 +1,177 @@
+/* Scoped presentation for the catheter imaging lab (C-arm rigs, film, drills). */
+
+/* ---------- primer and workbench shell ---------- */
+.cath-primer{margin-bottom:14px;padding:18px 22px;border:1px solid color-mix(in srgb,var(--primary) 22%,var(--border));border-radius:18px;background:radial-gradient(circle at 6% 0%,color-mix(in srgb,var(--primary) 16%,transparent),transparent 46%),var(--card)}.cath-primer .eyebrow{font-size:0.8rem;font-weight:850;letter-spacing:.16em;color:var(--primary)}.cath-primer h2{margin:.18em 0 .3em;font-size:clamp(1.15rem,2.2vw,1.7rem);letter-spacing:-.03em}.cath-primer p{margin:0;max-width:88ch;color:var(--fg-soft);font-size:0.82rem;line-height:1.6}
+.cath-workbench{display:grid;grid-template-columns:minmax(288px,.74fr) minmax(0,1.42fr);gap:15px;align-items:start}
+.cath-console,.cath-stage,.cath-drills{border:1px solid var(--border);border-radius:20px;background:var(--card);box-shadow:0 14px 45px rgba(5,10,25,.08)}
+.cath-console{padding:15px}.cath-console-head{display:flex;align-items:baseline;gap:9px;margin-bottom:12px}.cath-console-head span{font-size:0.8rem;font-weight:900;letter-spacing:.14em;color:var(--primary)}.cath-console-head b{font-size:0.86rem}
+
+/* ---------- the two C-arm rigs ---------- */
+.cath-rig{margin:0 0 12px;border:1px solid color-mix(in srgb,#38bdf8 18%,var(--border));border-radius:15px;background:linear-gradient(160deg,#061626,#0c1632 58%,#141433);overflow:hidden}
+.cath-rig figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:9px 12px;border-bottom:1px solid rgba(148,163,184,.16)}.cath-rig figcaption b{color:#e0f2fe;font-size:0.8rem;letter-spacing:.02em}.cath-rig figcaption span{color:#7dd3fc;font-size:0.8rem}
+.cath-rig svg{display:block;width:100%;max-height:196px;touch-action:none;cursor:grab}.cath-rig svg.dragging{cursor:grabbing}
+.cath-rig-read{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0;padding:8px 12px 10px;border-top:1px solid rgba(148,163,184,.14)}.cath-rig-read output{color:#67e8f9;font-size:0.8rem;font-weight:900;font-variant-numeric:tabular-nums}.cath-rig-read small{color:#94a3b8;font-size:0.8rem;text-align:right}
+
+/* Patient, table and gantry artwork. Detector above, tube below, as drawn in
+   the standard cranial-caudal and RAO-LAO angulation diagrams. */
+.cath-table{fill:#334155}
+.cath-torso{fill:rgba(148,163,184,.14);stroke:rgba(186,230,253,.5);stroke-width:1.6}
+.cath-lung{fill:rgba(56,189,248,.1);stroke:rgba(125,211,252,.35);stroke-width:1.2}
+.cath-heart{fill:rgba(244,63,94,.34);stroke:#fda4af;stroke-width:1.6}
+.cath-spine{fill:rgba(226,232,240,.34);stroke:rgba(226,232,240,.5);stroke-width:1.2}
+.cath-sternum{stroke:rgba(226,232,240,.42);stroke-width:2;stroke-linecap:round}
+.cath-side{fill:#64748b;font-size:12px;font-weight:900;letter-spacing:.09em;text-anchor:middle}.cath-side.end{text-anchor:middle}
+.cath-c{fill:none;stroke:#475569;stroke-width:7;stroke-linecap:round}
+.cath-detector rect,.cath-tube rect{fill:#1e293b;stroke:#94a3b8;stroke-width:1.6}.cath-tube circle{fill:#1e293b;stroke:#94a3b8;stroke-width:1.6}.cath-detector line,.cath-tube line{stroke:#94a3b8;stroke-width:1.6}
+.cath-beam{fill:rgba(103,232,249,.16);stroke:none}
+/* No transform transition: the gantry must track the pointer one-to-one. */
+.cath-gantry:focus-visible{outline:none}.cath-gantry:focus-visible .cath-detector rect,.cath-gantry:focus-visible .cath-tube rect{stroke:var(--ring,#22d3ee);stroke-width:2.6}
+.cath-tick{stroke:rgba(148,163,184,.45);stroke-width:1.2}.cath-tick.zero{stroke:#67e8f9;stroke-width:2}
+.cath-detent{fill:none;stroke:#a78bfa;stroke-width:1.4}
+.cath-reset{width:100%;padding:9px;border:1px solid var(--border);border-radius:11px;background:var(--bg);color:var(--fg-soft);font:inherit;font-size:0.8rem;font-weight:750;cursor:pointer}.cath-reset:hover,.cath-reset:focus-visible{border-color:var(--primary);color:var(--fg)}
+
+/* ---------- stage: toolbar, film, status ---------- */
+.cath-stage{overflow:hidden}
+.cath-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.cath-targets,.cath-toolbar-actions{display:flex;flex-wrap:wrap;gap:6px}
+.cath-chip,.cath-toggle{padding:7px 12px;border:1px solid var(--border);border-radius:999px;background:var(--bg);color:var(--fg-soft);font:inherit;font-size:0.8rem;font-weight:750;cursor:pointer;transition:.16s ease}
+.cath-chip:hover,.cath-toggle:hover,.cath-chip:focus-visible,.cath-toggle:focus-visible{border-color:var(--primary);color:var(--fg)}
+.cath-chip[aria-pressed="true"]{color:var(--on-primary);border-color:transparent;background:linear-gradient(120deg,var(--btn-g1),var(--btn-g2))}
+.cath-toggle[aria-pressed="true"]{color:var(--fg);border-color:#a78bfa;background:color-mix(in srgb,#a78bfa 16%,var(--bg))}
+.cath-toggle:disabled{opacity:.45;cursor:not-allowed}
+/* The film is an X-ray viewer: it stays black in both themes on purpose. */
+.cath-film{display:grid;place-items:center;min-height:330px;padding:14px;background:#03070c}
+.cath-film-empty{display:grid;justify-items:center;gap:12px;max-width:340px;text-align:center}.cath-film-empty p{margin:0;color:#94a3b8;font-size:0.8rem;line-height:1.55}.cath-film-empty b{color:#e2e8f0}
+.cath-map{width:100%;max-width:320px;height:auto}
+.cath-map-grid{stroke:rgba(148,163,184,.14);stroke-width:1}
+.cath-map-axis{stroke:rgba(148,163,184,.4);stroke-width:1.2}
+.cath-map-axis-label{fill:#64748b;font-size:12px;font-weight:900;letter-spacing:.1em}.cath-map-axis-label.end{text-anchor:end}.cath-map-axis-label.mid{text-anchor:middle}
+.cath-map-target rect{fill:none;stroke:#a78bfa;stroke-width:1.4}.cath-map-target text{fill:#c4b5fd;font-size:12px;font-weight:800;text-anchor:middle}
+.cath-map-you{fill:#22d3ee;stroke:#083344;stroke-width:1.5}
+.cath-plate{display:grid;gap:10px;margin:0;width:100%;max-width:520px}
+.cath-plate-stage{position:relative;width:100%;border-radius:10px;overflow:hidden;animation:cath-plate-in .26s ease}
+.cath-plate-stage img{display:block;width:100%;height:100%;object-fit:contain}
+.cath-plate figcaption{display:grid;gap:3px}.cath-plate figcaption b{color:#e0f2fe;font-size:0.8rem}.cath-plate figcaption span{color:#94a3b8;font-size:0.8rem;line-height:1.5}
+@keyframes cath-plate-in{from{opacity:0;transform:scale(.985)}}
+/* Label overlay: dots sit on the vessel, captions where the source deck put
+   them, both as percentages of the frame so they survive any resize. */
+.cath-labels{position:absolute;inset:0;pointer-events:none}
+.cath-labels svg{position:absolute;inset:0;width:100%;height:100%}
+.cath-labels svg line{stroke:rgba(248,113,113,.75);stroke-width:1}
+.cath-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:#ef4444;box-shadow:0 0 0 1.5px rgba(0,0,0,.55);transform:translate(-50%,-50%)}
+.cath-dot.asked{background:#fde047;box-shadow:0 0 0 2px rgba(0,0,0,.6),0 0 10px #fde047}
+.cath-cap{position:absolute;transform:translate(-50%,-50%);color:#fca5a5;font-size:0.8rem;font-weight:900;letter-spacing:.02em;text-shadow:0 0 4px #000,0 0 4px #000;white-space:nowrap}
+.cath-cap.numbered{display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.72);border:1px solid #fca5a5;font-size:0.8rem;text-shadow:none}
+.cath-status{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-top:1px solid var(--border)}
+.cath-status-angles{color:var(--fg);font-size:0.8rem;font-weight:850;font-variant-numeric:tabular-nums}
+.cath-status-lock{padding:4px 10px;border-radius:999px;background:var(--study-bg);color:var(--muted);font-size:0.8rem;font-weight:900;letter-spacing:.1em}
+.cath-status-lock.locked{background:rgba(16,185,129,.14);color:#10b981}
+
+/* ---------- drills and vessel quiz ---------- */
+.cath-drills{margin-top:15px;padding:16px 18px}
+.cath-drill-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}.cath-drill-head .eyebrow{font-size:0.8rem;font-weight:900;letter-spacing:.14em;color:var(--primary)}.cath-drill-head h3{margin:.15em 0 0;font-size:1.02rem}
+.cath-drill-score{flex:0 0 78px;text-align:center}.cath-drill-score strong{display:block;font-size:1.9rem;line-height:1;color:#22d3ee}.cath-drill-score span{font-size:0.8rem;color:var(--muted)}
+.cath-drill-progress{display:flex;align-items:center;gap:10px;margin-bottom:9px;color:var(--muted);font-size:0.8rem;font-weight:850;letter-spacing:.08em}.cath-drill-progress i{flex:1;height:5px;border-radius:99px;background:var(--study-bg);overflow:hidden}.cath-drill-progress em{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#22d3ee,#8b5cf6);transition:.25s}
+.cath-drill-goal{margin:0 0 7px;font-size:0.85rem;line-height:1.55;font-weight:650}
+.cath-drill-hint{margin:0;color:var(--fg-soft);font-size:0.8rem;line-height:1.5}
+.cath-drill-flash{margin:9px 0 0;padding:9px 11px;border-radius:9px;font-size:0.8rem;line-height:1.5}.cath-drill-flash.ok{border-left:3px solid #10b981;background:rgba(16,185,129,.1)}.cath-drill-flash.no{border-left:3px solid #f59e0b;background:rgba(245,158,11,.1)}
+.cath-drill-done b{font-size:0.88rem}.cath-drill-done p{margin:.45em 0 .8em;color:var(--fg-soft);font-size:0.8rem;line-height:1.55}
+.cath-quiz-stem{margin:0 0 9px;font-size:0.85rem;font-weight:650}
+.cath-quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.cath-quiz-options button{padding:10px 12px;text-align:left;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--fg);font:inherit;font-size:0.8rem;font-weight:750;cursor:pointer}.cath-quiz-options button em{display:block;margin-top:2px;color:var(--muted);font-size:0.8rem;font-style:normal;font-weight:600}
+.cath-quiz-options button:hover:not(:disabled),.cath-quiz-options button:focus-visible{border-color:var(--primary)}
+.cath-quiz-options button.right{border-color:#10b981;background:rgba(16,185,129,.12)}.cath-quiz-options button.wrong{border-color:#f43f5e;background:rgba(244,63,94,.1)}
+.cath-quiz-options button:disabled{cursor:default}
+.cath-quiz-feedback{margin-top:10px;font-size:0.8rem;line-height:1.55;color:var(--fg-soft)}.cath-quiz-feedback b.ok{color:#10b981}.cath-quiz-feedback b.no{color:#f43f5e}
+.cath-quiz-next{display:inline-block;margin-top:9px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(120deg,var(--btn-g1),var(--btn-g2));color:var(--on-primary);font:inherit;font-size:0.8rem;font-weight:800;cursor:pointer}
+
+/* ---------- reflow: the console and film stack before the page scrolls ---------- */
+@container physiology (max-width:1000px){.cath-workbench{grid-template-columns:1fr}.cath-rig svg{max-height:230px}}
+@container physiology (max-width:640px){.cath-console,.cath-drills{padding:13px}.cath-quiz-options{grid-template-columns:1fr}.cath-drill-head{flex-direction:column;gap:8px}.cath-drill-score{text-align:left}}
+@media(max-width:640px){.cath-quiz-options{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.cath-gantry,.cath-drill-progress em{transition:none}.cath-plate-stage{animation:none}}
+
+/* The C-arm is a teaching instrument on paper; the radiograph alone stays
+   dark. Angle cues remain vivid without turning the whole page blue. */
+.cath-primer {
+  border-color: var(--border);
+  background: var(--surface);
+}
+.cath-console,
+.cath-stage,
+.cath-drills {
+  border-color: var(--border);
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgba(72, 48, 29, .07);
+}
+.cath-rig {
+  border-color: var(--border);
+  background: #f3ebdf;
+}
+.cath-rig figcaption,
+.cath-rig-read {
+  border-color: #ddd2c3;
+}
+.cath-rig figcaption b,
+.cath-rig-read small {
+  color: #4e443b;
+}
+.cath-rig figcaption span,
+.cath-rig-read output {
+  color: #923d31;
+}
+.cath-table { fill: #a69887; }
+.cath-torso { fill: rgba(174, 139, 111, .17); stroke: #9d8977; }
+.cath-lung { fill: rgba(164, 115, 91, .12); stroke: #b79580; }
+.cath-heart { fill: rgba(179, 71, 65, .3); stroke: #9f3c39; }
+.cath-spine { fill: rgba(104, 86, 74, .3); stroke: #756457; }
+.cath-sternum { stroke: #8c7767; }
+.cath-side { fill: #625448; }
+.cath-c { stroke: #84776b; }
+.cath-detector rect,
+.cath-tube rect,
+.cath-tube circle { fill: #443c35; stroke: #a89b8c; }
+.cath-detector line,
+.cath-tube line { stroke: #c8b9a7; }
+.cath-beam { fill: rgba(194, 146, 72, .16); }
+.cath-gantry:focus-visible .cath-detector rect,
+.cath-gantry:focus-visible .cath-tube rect { stroke: var(--ring, #a84435); }
+.cath-tick { stroke: rgba(98, 84, 72, .42); }
+.cath-tick.zero { stroke: #a84435; }
+.cath-detent { stroke: #b88c45; }
+.cath-chip[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.cath-toggle[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  color: var(--fg);
+}
+.cath-status-lock.locked {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+.cath-drill-score strong { color: var(--primary); }
+.cath-drill-progress em { background: var(--primary); }
+.cath-quiz-next { background: var(--primary); color: var(--on-primary); }
+
+[data-theme="dark"] .cath-rig { background: #382f27; border-color: #665646; }
+[data-theme="dark"] .cath-rig figcaption,
+[data-theme="dark"] .cath-rig-read { border-color: #665646; }
+[data-theme="dark"] .cath-rig figcaption b,
+[data-theme="dark"] .cath-rig-read small { color: #f3e9d9; }
+[data-theme="dark"] .cath-rig figcaption span,
+[data-theme="dark"] .cath-rig-read output { color: #f0b092; }
+
+@media (max-width: 640px) {
+  .cath-toolbar { align-items: stretch; }
+  .cath-targets,
+  .cath-toolbar-actions { width: 100%; }
+  .cath-chip,
+  .cath-toggle { min-height: 42px; }
+  .cath-film { min-height: 280px; padding: 10px; }
+  .cath-plate figcaption { padding: 0 4px; }
+  .cath-rig svg { max-height: 220px; }
+}

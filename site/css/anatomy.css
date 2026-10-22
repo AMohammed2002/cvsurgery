@@ -1,0 +1,57 @@
+/* ============================================================================
+   Standalone Anatomy section — additive styles only.
+   Reuses the core design tokens (--g1/--g2, --surface, --border, --fg-soft,
+   --r-sm, --shadow) and existing .card/.btn/.pill/.stat/.fc-* classes.
+   ============================================================================ */
+
+/* venous-drainage pill colour (others reuse existing .pill.* variants) */
+.pill.violet { background: var(--mnem-bg); color: var(--mnem); }
+
+/* hub stats strip */
+.anat-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.anat-stats .stat { flex: 1; min-width: 110px; }
+
+/* category sections */
+.anat-cat { margin-top: 26px; }
+.anat-cat-head h2 { margin: 0 0 2px; }
+.anat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+
+.anat-region-card {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 15px 16px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); box-shadow: var(--shadow); text-decoration: none; color: var(--fg);
+  transition: transform .12s, border-color .18s, box-shadow .18s;
+}
+.anat-region-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+.anat-region-card.complete { border-color: var(--ok-border); box-shadow: inset 3px 0 var(--ok), var(--shadow); }
+.arc-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 800; font-family: var(--font-display); }
+.arc-title .pill { flex: 0 0 auto; font-family: var(--font-body); font-size: .62rem; }
+.arc-foot { display: flex; align-items: center; gap: 4px; color: var(--fg-soft); font-weight: 600; margin-top: 4px; }
+.arc-foot svg { width: 14px; height: 14px; }
+
+/* region page */
+.anat-diagram { display: flex; justify-content: center; padding: 18px; }
+.anat-diagram svg { max-width: 100%; height: auto; }
+.anat-section { margin-top: 16px; scroll-margin-top: 16px; }
+.anat-section h2 { margin: 0 0 10px; }
+/* prose de-walling: a measure that stays readable, a lead paragraph, and
+   accented emphasis so a long region reads as structure, not a wall. */
+.anat-prose { max-width: 72ch; }
+.anat-prose p { margin: 0 0 .7em; line-height: 1.6; }
+.anat-prose > p:first-child { font-size: 1.05rem; color: var(--fg); }
+.anat-prose strong, .anat-prose b { color: var(--hero-accent, var(--primary)); }
+.anat-prose ul, .anat-prose ol { margin: .4em 0 .8em; padding-left: 1.25em; line-height: 1.55; }
+.anat-prose li { margin: .25em 0; }
+.anat-prose li::marker { color: var(--hero-accent, var(--primary)); }
+.anat-toc { margin: 0 0 18px; }
+.anat-region-foot { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.anat-h2 { margin: 26px 0 12px; }
+
+/* deck menu — .anat-deck-row itself is declared with .sx-deck-row in components.css (§10) */
+.anat-deck-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.adr-title { font-weight: 700; }
+.adr-meta { display: flex; align-items: center; gap: 5px; color: var(--fg-soft); font-weight: 600; white-space: nowrap; }
+.adr-meta svg { width: 14px; height: 14px; }
+
+/* cloze styling is canonical in components.css (§10) — shared with the core and
+   surgery decks so all three read identically. */

@@ -1,0 +1,27 @@
+# macOS / editors
+.DS_Store
+._*
+Thumbs.db
+
+# Local Claude Code permission cache (machine-specific)
+.claude/settings.local.json
+
+# Session scratch, screenshots, and tarball backups (not source)
+tmp/
+backups/
+website_screenshots/
+lighthouse-*.html
+
+# Source-text dumps extracted from third-party books/PDFs.
+# Copyrighted material: never publish. The app does not load anything from here.
+build_assets/
+*.pdf
+
+# Node / Python junk
+node_modules/
+__pycache__/
+*.pyc
+*.log
+
+# Stray empty bare repo created by a mistyped git init; safe to delete
+main/

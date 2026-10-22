@@ -1,0 +1,187 @@
+/* ============================================================================
+   Standalone Surgeries section — additive styles only, sx-namespaced so the
+   module is independently deletable (does NOT depend on css/clinic.css). Reuses
+   core design tokens (--g1/--g2, --surface, --border, --fg-soft, --primary,
+   --accent, --r-sm, --shadow) and the existing core .card/.btn/.pill/.stat/
+   .kbox/.bar/.celebrate classes from css/style.css. Safe to delete with the
+   js/surgery/ folder — nothing else depends on it.
+   ============================================================================ */
+
+.sx-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.sx-stats .stat { flex: 1; min-width: 100px; }
+
+/* hub call-to-action banner */
+.sx-cta-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 16px; }
+.sx-cta { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.sx-cta-txt h2 { margin: 0 0 2px; display: flex; align-items: center; gap: 8px; font-size: 1.15rem; }
+.sx-cta-txt h2 svg { width: 19px; height: 19px; color: var(--primary); }
+.sx-cta-txt p { margin: 0; max-width: 56ch; }
+.sx-cta .btn { white-space: nowrap; }
+
+/* category blocks */
+.sx-cat { margin-top: 26px; }
+.sx-cat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.sx-cat-head h2 { margin: 0 0 2px; }
+.sx-cat-head p { margin: 0; max-width: 70ch; }
+
+.sx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 14px; }
+.sx-card {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 15px 16px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); box-shadow: var(--shadow); text-decoration: none; color: var(--fg);
+  transition: transform .12s, border-color .18s, box-shadow .18s;
+}
+.sx-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+.sx-card.read { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+.sc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sc-title { font-weight: 800; font-family: var(--font-display); line-height: 1.25; }
+.sc-check { color: var(--accent); display: inline-flex; flex-shrink: 0; }
+.sc-check svg { width: 18px; height: 18px; }
+.sc-sub { line-height: 1.4; }
+.sc-foot { display: flex; align-items: center; gap: 4px; color: var(--fg-soft); font-weight: 600; margin-top: 6px; }
+.sc-foot svg { width: 14px; height: 14px; margin-left: auto; }
+
+/* section reading page */
+.sx-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.sx-toc { padding: 14px 18px; margin-bottom: 18px; }
+.sx-toc .toc-h { text-transform: uppercase; letter-spacing: .05em; font-weight: 700; margin-bottom: 6px; }
+.sx-toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 28px; }
+.sx-toc li { margin: 3px 0; break-inside: avoid; }
+.sx-toc button { color: var(--primary); text-decoration: none; border: 0; padding: 2px 0; background: transparent; font: inherit; text-align: left; }
+.sx-toc button:hover { text-decoration: underline; }
+@media (max-width: 620px) { .sx-toc ol { columns: 1; } }
+
+.sx-block { margin: 0 0 26px; scroll-margin-top: 16px; }
+.sx-block > h2 {
+  margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+  font-family: var(--font-display);
+}
+.sx-block p { line-height: 1.62; }
+.sx-block ul, .sx-block ol { line-height: 1.6; }
+.sx-block table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .92rem; }
+.sx-block th, .sx-block td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+.sx-block th { background: color-mix(in srgb, var(--primary) 10%, var(--surface)); font-weight: 700; }
+.sx-block tr:nth-child(even) td, .sx-block tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--fg) 3%, transparent); }
+/* Wide (4+ column) comparison tables scroll inside themselves so the page never does. */
+.sx-block .table-scroll { overflow-x: auto; margin: 14px 0; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+.sx-block .table-scroll > table { margin: 0; min-width: 620px; }
+
+/* Original surgical teaching figures */
+.sx-figure { margin: 20px 0; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+.sx-figure-open { display: block; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; cursor: zoom-in; text-align: left; position: relative; }
+.sx-figure-open img { display: block; width: 100%; height: auto; max-height: 680px; object-fit: contain; background: #f7f8f7; }
+.sx-figure-open:focus-visible, .sx-figure-dialog button:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.sx-figure-cue { position: absolute; right: 10px; bottom: 10px; border-radius: 7px; padding: 5px 9px; background: rgba(0, 0, 0, .76); color: white; font-size: .78rem; font-weight: 700; }
+.sx-figure figcaption { padding: 12px 16px; line-height: 1.5; color: var(--fg-soft); }
+.sx-figure-dialog { width: min(96vw, 1480px); height: 94vh; max-width: none; max-height: none; padding: 0; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); color: var(--fg); }
+.sx-figure-dialog::backdrop { background: rgba(0, 0, 0, .82); }
+.sx-figure-dialog[open] { display: flex; flex-direction: column; }
+.sx-figure-dialog-bar { display: flex; gap: 9px; justify-content: flex-end; padding: 9px; border-bottom: 1px solid var(--border); }
+.sx-figure-dialog-bar button { min-height: 40px; padding: 6px 11px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--fg); cursor: pointer; }
+.sx-figure-dialog-viewport { flex: 1; min-height: 0; overflow: auto; text-align: center; background: #f7f8f7; }
+.sx-figure-dialog-viewport img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; margin: auto; object-fit: contain; }
+.sx-figure-dialog.sx-figure-actual .sx-figure-dialog-viewport img { max-width: none; max-height: none; }
+
+.sx-foot { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+
+/* MCQ runner (own namespace) */
+.sx-q { padding: 20px 18px; }
+.sq-stem { font-size: 1.06rem; font-weight: 600; line-height: 1.5; margin-bottom: 16px; }
+.sq-opts { display: flex; flex-direction: column; gap: 10px; }
+.sq-opt {
+  display: flex; align-items: flex-start; gap: 12px; text-align: left; width: 100%;
+  padding: 13px 15px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--fg); font: inherit; cursor: pointer;
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.sq-opt:not(:disabled):hover { border-color: var(--primary); }
+.sq-key {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface)); color: var(--primary); font-weight: 800; font-size: .85rem;
+}
+.sq-opt.correct { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.sq-opt.correct .sq-key { background: var(--accent); color: #022; }
+.sq-opt.wrong { border-color: var(--danger, #e5484d); background: color-mix(in srgb, var(--danger, #e5484d) 13%, var(--surface)); }
+.sq-opt.wrong .sq-key { background: var(--danger, #e5484d); color: #fff; }
+.sq-opt.dim { opacity: .55; }
+.sq-explain { margin-top: 14px; padding: 12px 14px; border-radius: var(--r-sm); line-height: 1.55; }
+.sq-explain.ok { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.sq-explain.no { background: color-mix(in srgb, var(--danger, #e5484d) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--danger, #e5484d) 35%, var(--border)); }
+
+/* flashcard deck menu; reuses the core flashcard, bar and celebration styles */
+.sx-deck-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.sx-deck-h { margin: 24px 0 4px; font-family: var(--font-display); }
+.sdr-title { font-weight: 700; }
+.sdr-meta { display: flex; align-items: center; gap: 5px; color: var(--fg-soft); font-weight: 600; white-space: nowrap; }
+.sdr-meta svg { width: 14px; height: 14px; }
+
+/* cloze + deck rows are declared once in components.css (§10) across the core,
+   anatomy and surgery namespaces — .sx-clz-* / .sx-deck-row styling lives there. */
+
+/* ============================== ORDER-THE-STEPS GAME ============================== */
+/* tap-to-sequence ordering drill — own namespace, reuses core tokens + .celebrate/.card */
+.sx-ord-clock {
+  display: inline-flex; align-items: center; gap: 6px; font-weight: 800;
+  font-variant-numeric: tabular-nums; padding: 5px 12px; border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 13%, var(--surface));
+  color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  white-space: nowrap; font-size: .92rem;
+}
+.sx-ord-clock svg { width: 15px; height: 15px; }
+.sx-ord-clock.danger {
+  background: color-mix(in srgb, var(--danger, #e5484d) 14%, var(--surface));
+  color: var(--danger, #e5484d); border-color: color-mix(in srgb, var(--danger, #e5484d) 45%, var(--border));
+  animation: sxOrdPulse 1s ease-in-out infinite;
+}
+.sx-ord-clock.over {
+  background: var(--danger, #e5484d); color: #fff; border-color: var(--danger, #e5484d);
+}
+@keyframes sxOrdPulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* the slots the student fills, top-to-bottom */
+.sx-ord-placed { display: flex; flex-direction: column; gap: 7px; margin: 4px 0 18px; }
+.sx-ord-slot {
+  display: flex; align-items: center; gap: 11px; min-height: 44px;
+  padding: 8px 12px; border-radius: var(--r-sm);
+  border: 1px dashed var(--border); background: color-mix(in srgb, var(--fg) 3%, var(--surface));
+  color: var(--fg-soft); transition: border-color .15s, background .15s, transform .1s;
+}
+.sx-ord-slot.filled {
+  border-style: solid; border-color: var(--border); background: var(--surface);
+  color: var(--fg); box-shadow: var(--shadow); cursor: pointer;
+}
+.sx-ord-slot.filled:hover { border-color: var(--danger, #e5484d); transform: translateX(2px); }
+.sx-ord-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface)); color: var(--primary);
+  font-weight: 800; font-size: .85rem;
+}
+.sx-ord-txt { flex: 1; line-height: 1.4; font-size: .96rem; }
+.sx-ord-x { flex-shrink: 0; font-size: 1.2rem; line-height: 1; color: var(--fg-soft); font-weight: 700; }
+.sx-ord-slot.filled:hover .sx-ord-x { color: var(--danger, #e5484d); }
+
+/* the shuffled pool of step chips to tap */
+.sx-ord-poolhead { margin: 0 0 8px; }
+.sx-ord-pool { display: flex; flex-direction: column; gap: 8px; }
+.sx-ord-chip {
+  display: block; width: 100%; text-align: left; padding: 11px 14px;
+  border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface);
+  color: var(--fg); box-shadow: var(--shadow); cursor: pointer; line-height: 1.4; font-size: .96rem;
+  transition: border-color .15s, transform .1s;
+}
+.sx-ord-chip:hover { border-color: var(--primary); transform: translateX(2px); }
+
+/* results */
+.sx-ord-verdict { margin: 6px 0 2px; letter-spacing: .04em; }
+.sx-ord-verdict.pass { color: var(--accent); }
+.sx-ord-verdict.fail { color: var(--danger, #e5484d); }
+.sx-ord-answer { list-style: none; counter-reset: ord; padding: 0; margin: 10px 0 0; display: flex; flex-direction: column; gap: 7px; }
+.sx-ord-answer li {
+  display: flex; align-items: flex-start; gap: 10px; padding: 9px 13px;
+  border-radius: var(--r-sm); border: 1px solid var(--border); line-height: 1.45; font-size: .95rem;
+}
+.sx-ord-answer li.ok { background: color-mix(in srgb, var(--accent) 11%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 38%, var(--border)); }
+.sx-ord-answer li.bad { background: color-mix(in srgb, var(--danger, #e5484d) 9%, var(--surface)); border-color: color-mix(in srgb, var(--danger, #e5484d) 32%, var(--border)); }
+.sx-ord-mark { flex-shrink: 0; font-weight: 800; }
+.sx-ord-answer li.ok .sx-ord-mark { color: var(--accent); }
+.sx-ord-answer li.bad .sx-ord-mark { color: var(--danger, #e5484d); }

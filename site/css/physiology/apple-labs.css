@@ -1,0 +1,422 @@
+/* Apple-inspired interaction and material layer for Physiology Labs only.
+   Geometry is intentionally inherited unchanged from the existing lab files. */
+#main.physiology-page {
+  --card: color-mix(in srgb, var(--surface) 96%, var(--bg) 4%);
+  --phys-material: color-mix(in srgb, var(--surface) 84%, transparent);
+  --phys-material-heavy: color-mix(in srgb, var(--surface) 93%, transparent);
+  --phys-solid: color-mix(in srgb, var(--surface-2) 88%, var(--surface) 12%);
+  --phys-hairline: color-mix(in srgb, #fff 34%, var(--border));
+  --phys-shadow: 0 1px 1px color-mix(in srgb, #fff 20%, transparent),
+    0 18px 48px color-mix(in srgb, var(--fg) 12%, transparent);
+  --phys-shadow-raised: 0 1px 1px color-mix(in srgb, #fff 26%, transparent),
+    0 24px 64px color-mix(in srgb, var(--fg) 18%, transparent);
+  font-optical-sizing: auto;
+}
+
+[data-theme="dark"] #main.physiology-page {
+  --card: color-mix(in srgb, var(--surface) 94%, #111827 6%);
+  --phys-material: color-mix(in srgb, var(--surface) 74%, transparent);
+  --phys-material-heavy: color-mix(in srgb, var(--surface) 88%, transparent);
+  --phys-solid: color-mix(in srgb, var(--surface-2) 94%, #fff 6%);
+  --phys-hairline: color-mix(in srgb, #fff 19%, var(--border));
+  --phys-shadow: inset 0 1px 0 rgba(255, 255, 255, .055),
+    0 18px 48px rgba(0, 0, 0, .34);
+  --phys-shadow-raised: inset 0 1px 0 rgba(255, 255, 255, .075),
+    0 28px 76px rgba(0, 0, 0, .5);
+}
+
+/* Floating chrome and the lesson sheet use the clearest material hierarchy. */
+#main.physiology-page .lab-topbar {
+  background: var(--phys-material-heavy);
+  border-color: var(--phys-hairline);
+  box-shadow: var(--phys-shadow);
+  backdrop-filter: blur(24px) saturate(175%);
+  -webkit-backdrop-filter: blur(24px) saturate(175%);
+}
+
+#main.physiology-page .lab-lesson-scrim {
+  background: color-mix(in srgb, #020617 66%, transparent);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+#main.physiology-page .lab-lesson-card {
+  background: var(--phys-material-heavy);
+  border-color: var(--phys-hairline);
+  box-shadow: var(--phys-shadow-raised);
+  backdrop-filter: blur(30px) saturate(170%);
+  -webkit-backdrop-filter: blur(30px) saturate(170%);
+  transform-origin: calc(100% - 72px) 0;
+  animation-timing-function: cubic-bezier(.22, .8, .24, 1);
+}
+
+@keyframes lab-lesson-pop {
+  from { opacity: .72; filter: blur(7px); transform: translateY(12px) scale(.98); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+
+/* Large windows float above the route background; controls within them stay solid. */
+#main.physiology-page :where(
+  .lab-capabilities > div,
+  .lab-grid-expanded .lab-card,
+  .card.mt,
+  .trainer-primer,
+  .trainer-console,
+  .trainer-visual,
+  .trainer-challenge,
+  .rhythm-primer,
+  .rhythm-case-rail,
+  .rhythm-workbench,
+  .strategy-intro,
+  .strategy-console,
+  .strategy-workbench,
+  .support-intro,
+  .support-console,
+  .support-workbench,
+  .support-primer,
+  .support-challenges,
+  .teg-surgery,
+  .support-debrief
+) {
+  background: var(--phys-material);
+  border-color: var(--phys-hairline);
+  box-shadow: var(--phys-shadow);
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+}
+
+#main.physiology-page .lab-resident-banner {
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--g2) 22%, transparent), transparent 42%),
+    linear-gradient(132deg, color-mix(in srgb, #071e2d 92%, transparent), color-mix(in srgb, #182447 88%, transparent));
+  border-color: color-mix(in srgb, #fff 18%, var(--border));
+  box-shadow: var(--phys-shadow-raised);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+}
+
+#main.physiology-page .lab-resident-banner::after {
+  opacity: .58;
+}
+
+#main.physiology-page :where(
+  .trainer-knob-control,
+  .trainer-readouts > div,
+  .do2-chain > div,
+  .rhythm-choice > span,
+  .rhythm-result-row > span,
+  .strategy-preset,
+  .support-case,
+  .support-quiz,
+  .support-metrics > div,
+  .teg-surgery article
+) {
+  background: var(--phys-solid);
+  border-color: color-mix(in srgb, var(--primary) 12%, var(--border));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent);
+}
+
+/* Dark instrument faces remain opaque and familiar, never stacked glass. */
+#main.physiology-page :where(
+  .rhythm-monitor,
+  .rhythm-console,
+  .cpb-machine,
+  .cpb-circuit,
+  .iabp-monitor,
+  .teg-monitor,
+  .perfusion-circuit,
+  .shock-monitor,
+  .valve-wave
+) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#main.physiology-page .lab-grid-expanded .lab-card {
+  transition: transform 180ms cubic-bezier(.22, .8, .24, 1),
+    border-color 180ms ease-out, box-shadow 220ms ease-out, background 220ms ease-out;
+}
+
+#main.physiology-page .lab-device {
+  background: linear-gradient(145deg, rgba(32, 65, 84, .92), rgba(5, 20, 31, .96));
+  border-color: color-mix(in srgb, #bcecff 26%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 16px 38px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #main.physiology-page .lab-grid-expanded .lab-card:hover {
+    transform: translateY(-2px) scale(1.002);
+    box-shadow: var(--phys-shadow-raised);
+  }
+}
+
+/* Pointer-down feedback is immediate. Transforms never participate in layout. */
+#main.physiology-page :is(button:not(:disabled), a[href], summary) {
+  transition: transform 100ms ease-out, border-color 160ms ease-out,
+    background 160ms ease-out, box-shadow 180ms ease-out, color 160ms ease-out;
+  transform-origin: center;
+}
+
+#main.physiology-page :is(button:not(:disabled), a[href], summary):active {
+  transform: scale(.97);
+  filter: brightness(.98);
+}
+
+#main.physiology-page .lab-grid-expanded .lab-card:active {
+  transform: translateY(0) scale(.992);
+}
+
+#main.physiology-page :is(button, a[href], summary, [role="slider"]):focus-visible {
+  outline-color: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #main.physiology-page :is(button:not(:disabled), a[href], summary):active,
+  #main.physiology-page .lab-grid-expanded .lab-card:active {
+    transform: none;
+    filter: none;
+  }
+
+  #main.physiology-page .lab-lesson-card {
+    animation-name: lab-lesson-fade;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes lab-lesson-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  #main.physiology-page :where(
+    .lab-topbar,
+    .lab-lesson-card,
+    .lab-capabilities > div,
+    .lab-grid-expanded .lab-card,
+    .card.mt,
+    .trainer-primer,
+    .trainer-console,
+    .trainer-visual,
+    .trainer-challenge,
+    .rhythm-primer,
+    .rhythm-case-rail,
+    .rhythm-workbench,
+    .strategy-intro,
+    .strategy-console,
+    .strategy-workbench,
+    .support-intro,
+    .support-console,
+    .support-workbench,
+    .support-primer,
+    .support-challenges,
+    .teg-surgery,
+    .support-debrief
+  ) {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  #main.physiology-page .lab-lesson-scrim {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  #main.physiology-page {
+    --phys-material: var(--surface);
+    --phys-material-heavy: var(--surface);
+    --phys-hairline: color-mix(in srgb, var(--fg) 62%, var(--border));
+  }
+
+  #main.physiology-page :is(button, a[href], summary, [role="slider"]):focus-visible {
+    outline-color: var(--fg);
+  }
+}
+
+/* Launch palette: the teaching workspace is warm paper around deliberately
+   dark clinical displays. Signal colours inside monitors and vessel diagrams
+   retain their medical meaning. */
+#main.physiology-page {
+  --bg: #f7f2e9;
+  --surface: #fffdf9;
+  --surface-2: #f4ede2;
+  --card: #fffdf9;
+  --border: #ddd2c3;
+  --fg: #302923;
+  --fg-soft: #665c52;
+  --muted: #f0e7db;
+  --primary: #a84435;
+  --on-primary: #fffaf5;
+  --g1: #a84435;
+  --g2: #d5a642;
+  --btn-g1: #a84435;
+  --btn-g2: #a84435;
+  --ring: #a84435;
+  --phys-material: #fffdf9;
+  --phys-material-heavy: #fffdf9;
+  --phys-solid: #f7f1e8;
+  --phys-hairline: #ddd2c3;
+  --phys-shadow: 0 10px 30px rgba(72, 48, 29, .07);
+  --phys-shadow-raised: 0 18px 44px rgba(72, 48, 29, .12);
+}
+
+[data-theme="dark"] #main.physiology-page {
+  --bg: #211d1a;
+  --surface: #302922;
+  --surface-2: #3a3129;
+  --card: #302922;
+  --border: #55483a;
+  --fg: #f4e9d9;
+  --fg-soft: #d1beab;
+  --muted: #3a3129;
+  --primary: #f0a88c;
+  --on-primary: #302018;
+  --g1: #f0a88c;
+  --g2: #e5c075;
+  --btn-g1: #f0a88c;
+  --btn-g2: #f0a88c;
+  --ring: #f0a88c;
+  --phys-material: #302922;
+  --phys-material-heavy: #302922;
+  --phys-solid: #3a3129;
+  --phys-hairline: #55483a;
+}
+
+#main.physiology-page .studio-lab {
+  min-width: 0;
+  color: var(--fg);
+}
+
+#main.physiology-page :where(
+  .trainer-console, .trainer-primer, .trainer-challenge,
+  .rhythm-case-rail, .rhythm-workbench, .strategy-console,
+  .strategy-workbench, .support-console, .support-workbench,
+  .support-primer, .support-challenges, .teg-surgery,
+  .cpb-command-deck, .cpb-surgery-shell, .cath-console,
+  .cath-stage, .cath-drills
+) {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--phys-shadow);
+}
+
+#main.physiology-page :where(
+  .trainer-presets button, .trainer-answer, .strategy-preset,
+  .support-case, .support-quiz button, .rhythm-case-button,
+  .cath-reset, .cath-chip, .cath-toggle
+) {
+  border-color: var(--border);
+}
+
+#main.physiology-page :where(input:not([type="range"]), select, textarea) {
+  accent-color: var(--primary);
+}
+
+#main.physiology-page :where(button, a[href], input, select, textarea, [role="slider"]):focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+#main.physiology-page .studio-guidance,
+#main.physiology-page .trainer-interpretation,
+#main.physiology-page .studio-reference,
+#main.physiology-page .support-console-note {
+  border-color: var(--border);
+}
+
+#main.physiology-page .studio-guidance {
+  border-left-color: var(--primary);
+}
+
+/* Learning controls across the remaining labs share one quiet accent. */
+#main.physiology-page .strategy-intro,
+#main.physiology-page .support-intro,
+#main.physiology-page .rhythm-primer,
+#main.physiology-page .support-debrief,
+#main.physiology-page .strategy-debrief {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--phys-shadow);
+}
+#main.physiology-page .strategy-rule,
+#main.physiology-page .strategy-equation,
+#main.physiology-page .strategy-prompt,
+#main.physiology-page .strategy-feedback,
+#main.physiology-page .support-prediction,
+#main.physiology-page .teg-decision {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+#main.physiology-page .strategy-rule span::before,
+#main.physiology-page .strategy-panel-title>span,
+#main.physiology-page .strategy-primary,
+#main.physiology-page .strategy-challenge header span {
+  background: var(--primary);
+  box-shadow: none;
+}
+#main.physiology-page .strategy-equation span,
+#main.physiology-page .strategy-primer summary span,
+#main.physiology-page .strategy-score strong,
+#main.physiology-page .strategy-clock-controls strong,
+#main.physiology-page .support-section-head strong,
+#main.physiology-page .support-debrief>strong {
+  color: var(--primary);
+}
+#main.physiology-page .strategy-preset.active,
+#main.physiology-page .support-case.active {
+  background: var(--surface-2);
+  border-color: var(--primary);
+  box-shadow: none;
+}
+#main.physiology-page .strategy-console input[type="range"],
+#main.physiology-page .support-console input[type="range"],
+#main.physiology-page .teg-toggle input {
+  accent-color: var(--primary);
+}
+#main.physiology-page .strategy-answers button:hover,
+#main.physiology-page .strategy-challenge button:hover,
+#main.physiology-page .support-quiz button:hover {
+  border-color: var(--primary);
+}
+#main.physiology-page .strategy-circuit,
+#main.physiology-page .strategy-heartmap {
+  border-color: #65594e;
+  background: #252421;
+}
+#main.physiology-page .strategy-circuit-head span { color: #f2c47b; }
+#main.physiology-page .strategy-circuit-head b { color: #e9dfd1; }
+#main.physiology-page .strategy-flow-legend { color: #d8cbbb; }
+#main.physiology-page .strategy-dial-bank,
+#main.physiology-page .support-dial-bank {
+  background: #302a25;
+  border-color: #65594e;
+}
+#main.physiology-page .strategy-dial i { background: #edb96b; box-shadow: none; }
+#main.physiology-page .strategy-rotary output { color: #f2c47b; }
+#main.physiology-page .strategy-cpg-machine { background: #302a25; }
+#main.physiology-page .strategy-cpg-pump { background: #211e1a; }
+#main.physiology-page .strategy-cpg-pump em { color: #f2c47b; }
+
+@media (max-width: 640px) {
+  #main.physiology-page .strategy-rule,
+  #main.physiology-page .strategy-equation { padding: 15px; }
+  #main.physiology-page .strategy-debrief,
+  #main.physiology-page .support-debrief { padding: 18px; }
+}
+
+@media (max-width: 640px) {
+  #main.physiology-page .lab-topbar {
+    align-items: flex-start;
+  }
+
+  #main.physiology-page :where(.trainer-presets, .studio-workspace-tools, .cath-toolbar-actions) button {
+    min-height: 40px;
+  }
+}
