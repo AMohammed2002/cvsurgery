@@ -11,5 +11,8 @@
     "seo": "node site/tools/gen-seo-files.js",
     "override-password": "node site/tools/set-override-password.js",
     "lighthouse": "npx -y lighthouse@12 http://127.0.0.1:8765/ --preset=desktop --output=html --output-path=./lighthouse-desktop.html --chrome-flags=--headless=new --quiet"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
